@@ -6,6 +6,8 @@ import SelectField from '@/components/common/SelectField';
 import InputField from '@/components/common/InputField';
 import CheckboxField from '@/components/common/CheckboxField';
 import RadioGroup from '@/components/common/RadioGroup';
+import DateRangeInputField from '@/components/common/DateRangeInputField';
+import { useTranslations } from 'next-intl';
 
 const bookerTypeOptions = [
   { value: 'personal', label: 'Personal' },
@@ -36,82 +38,94 @@ const packageOptions = [
 ];
 
 export default function BookingDetailsSection() {
-  // We don't need to destructure form context variables as they're handled by the form components
-  useFormContext<GroupBookingFormData>();
+  const { register, setValue, watch } = useFormContext<GroupBookingFormData>();
+  const t = useTranslations('form.bookingDetails');
+
+  // Watch the current values of the radio buttons
+  const bookerType = watch('bookingDetails.bookerType');
+  const purposeOfStay = watch('bookingDetails.purposeOfStay');
+  const packageType = watch('bookingDetails.packageType');
+
+  const handleRadioChange = (name: keyof GroupBookingFormData['bookingDetails'], value: string) => {
+    setValue(`bookingDetails.${name}`, value);
+  };
+
+  const handleDateChange = (dates: { startDate: Date | null; endDate: Date | null }) => {
+    setValue('bookingDetails.dates', {
+      checkIn: dates.startDate ? dates.startDate.toISOString().split('T')[0] : '',
+      checkOut: dates.endDate ? dates.endDate.toISOString().split('T')[0] : '',
+    });
+  };
 
   return (
     <div className="space-y-6">
-        <div>
-          <h4 className="text-base font-medium text-gray-700 mb-3">What type of booker are you?</h4>
-          <RadioGroup 
-            name="bookingDetails.bookerType" 
-            options={bookerTypeOptions} 
-            label="Booker Type"
-          />
-        </div>
-        
-        <div>
-          <h4 className="text-base font-medium text-gray-700 mb-3">Is your group staying for Business or Leisure?</h4>
-          <RadioGroup 
-            name="bookingDetails.purposeOfStay" 
-            label="Purpose of Stay"
-            options={purposeOfStayOptions} 
-          />
-        </div>
-        
-        <CheckboxField 
-          name="bookingDetails.isSchoolOrYouth" 
-          label="Please tick this box if you are booking for a school or youth group." 
+      <div>
+        <RadioGroup
+          name="bookingDetails.bookerType"
+          label={t('bookerType.label')}
+          options={bookerTypeOptions}
+          value={bookerType}
+          onChange={(value) => handleRadioChange('bookerType', value)}
         />
-        
-        <div>
-          <h4 className="text-base font-medium text-gray-700 mb-3">What is the reason for your group&apos;s visit?</h4>
-          <SelectField 
-            name="bookingDetails.reasonForVisit" 
-            label="Reason for Visit"
-            options={reasonForVisitOptions} 
-            placeholder="Select a reason" 
-          />
-        </div>
-        
-        <div className="pt-4 border-t border-gray-200">
-          <p className="text-sm text-gray-600 mb-4">
-            Our team will try to accommodate your group&apos;s preferences in terms of hotels and dates. 
-            If that&apos;s not possible, we&apos;ll do everything we can to offer the best alternatives.
-          </p>
-          <InputField 
-            placeholder="Enter a hotel" 
-            label="Preferred Hotel"
-            name="bookingDetails.preferredHotel" 
-          />
-          <div className="mt-4">
-            <h4 className="text-base font-medium text-gray-700 mb-2">Stay Dates</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <InputField 
-                name="bookingDetails.dates.checkIn" 
-                label="Check-in Date" 
-                type="date" 
-                placeholder="Select check-in date"
-              />
-              <InputField 
-                name="bookingDetails.dates.checkOut" 
-                label="Check-out Date" 
-                type="date" 
-                placeholder="Select check-out date"
-              />
-            </div>
-          </div>
-        </div>
-        
-        <div>
-          <h4 className="text-base font-medium text-gray-700 mb-2">Package type</h4>
-          <p className="text-sm text-gray-500 mb-3">Subject to availability. Room only not available for group bookings.</p>
-          <RadioGroup 
-            name="bookingDetails.packageType" 
-            options={packageOptions} 
-            label="Package Type"
+      </div>
+
+      <div>
+        <RadioGroup
+          name="bookingDetails.purposeOfStay"
+          label={t('stayType.label')}
+          options={purposeOfStayOptions.map((option) => ({
+            value: option.value,
+            label: t(`stayType.options.${option.value}`),
+          }))}
+          value={purposeOfStay} // Bind the selected value
+          onChange={(value) => handleRadioChange('purposeOfStay', value)}
+        />
+      </div>
+
+      <CheckboxField
+        label={t('isSchoolOrYouth.label')}
+        {...register('bookingDetails.isSchoolOrYouth')}
+      />
+
+      <div>
+        <SelectField
+          name="bookingDetails.reasonForVisit"
+          label={t('reasonForVisit.label')}
+          options={reasonForVisitOptions}
+          placeholder={t('reasonForVisit.placeholder')}
+        />
+      </div>
+
+      <div className="pt-4 border-t border-gray-200">
+        <p className="text-sm text-gray-600 mb-4">
+          {t('BookingDetails.textarea')}
+        </p>
+        <InputField
+          placeholder={t('prefferedHotel.placeholder')}
+          label={t('prefferedHotel.label')}
+          name="bookingDetails.preferredHotel"
+        />
+        <div className="mt-4">
+          <DateRangeInputField
+            label={t('dates.label')}
+            name="bookingDetails.dates"
+            startDate={new Date()}
+            endDate={new Date(new Date().setFullYear(new Date().getFullYear() + 3))}
+            onChange={handleDateChange}
           />
         </div>
       </div>
+
+      <div>
+        <p className="text-sm text-gray-500 mb-3">{t('packageType.description')}</p>
+        <RadioGroup
+          name="packageType"
+          label={t('packageType.label')}
+          options={packageOptions}
+          value={packageType}
+          onChange={(value) => handleRadioChange('packageType', value)}
+        />
+      </div>
+    </div>
   );
 }

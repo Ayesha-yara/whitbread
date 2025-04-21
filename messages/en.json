@@ -73,43 +73,30 @@
             "reasonForVisit": {
                 "label": "What is the reason for your group's visit?",
                 "placeholder": "Select a reason",
-                "error": "Please select a reason before proceeding",
-                "options": {
-                    "association": "Association",
-                    "busTour": "Bus tour",
-                    "businessMeeting": "Business meeting",
-                    "charityEvent": "Charity event",
-                    "conventionConference": "Convention/Conference",
-                    "government": "Government",
-                    "graduationReunion": "Graduation/Reunion",
-                    "layover": "Layover",
-                    "leisureTour": "Leisure tour",
-                    "military": "Military",
-                    "musicBand": "Music band",
-                    "other": "Other",
-                    "religiousChurchEvent": "Religious/Church event",
-                    "schoolGroup": "School group",
-                    "sportEvent": "Sport event",
-                    "sportTeamAdult": "Sport team - Adult",
-                    "sportTeamYouth": "Sport team - Youth",
-                    "stagHenParty": "Stag/Hen party",
-                    "tradeFair": "Trade fair",
-                    "wedding": "Wedding",
-                    "workCrew": "Work crew",
-                    "youthGroup": "Youth group"
+                "error": "Please select a reason before proceeding"
+            },
+            "dates": {
+                "label": "Arrival date",
+                "placeholder": "DD/MM/YYYY",
+                "error": {
+                    "required": "Arrival date is required",
+                    "format": "Please enter a valid date",
+                    "future": "Arrival date must be in the future"
                 }
             },
             "BookingDetails" : {
                 "label": "Booking details",
                 "textarea": "Our team will try to accommodate your group’s preferences in terms of hotels and dates. If that’s not possible, we’ll do everything we can to offer the best alternatives."
             },
+            "prefferedHotel": {
+                "label": "Preferred hotel",
+                "placeholder": "Select a hotel",
+                "error": "Please select a hotel"
+            },
             "packageType": {
                 "label": "Package type",
                 "placeholder": "Select a package type",
-                "options": {
-                    "PremierInnBreakfast": "Premier Inn Breakfast",
-                    "MealDeal": "Meal Deal(dinner, drink and breakfast)"
-                }
+                "description": "Subject to availability. Room only not available for group bookings."
             }
         },
         "roomRequirements": {
