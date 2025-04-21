@@ -1,0 +1,104 @@
+{
+    "meta": {
+        "title": "Gruppenanfrage | Premier Inn",
+        "description": "Premier Inn Gruppenanfrageformular für 6 oder mehr Zimmer"
+    },
+    "header": {
+        "title": "Gruppenanfrage-Formular",
+        "subtitle": "Für Buchungen von 6 oder mehr Zimmern"
+    },
+    "form": {
+        "sections": {
+            "personalDetails": {
+                "title": "Ihre Daten",
+                "firstName": {
+                    "label": "Vorname",
+                    "placeholder": "Geben Sie Ihren Vornamen ein",
+                    "error": "Vorname ist erforderlich"
+                },
+                "lastName": {
+                    "label": "Nachname",
+                    "placeholder": "Geben Sie Ihren Nachnamen ein",
+                    "error": "Nachname ist erforderlich"
+                },
+                "email": {
+                    "label": "E-Mail-Adresse",
+                    "placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
+                    "error": {
+                        "required": "E-Mail-Adresse ist erforderlich",
+                        "format": "Geben Sie eine gültige E-Mail-Adresse ein"
+                    }
+                },
+                "phone": {
+                    "label": "Telefonnummer",
+                    "placeholder": "Geben Sie Ihre Telefonnummer ein",
+                    "error": {
+                        "required": "Telefonnummer ist erforderlich",
+                        "format": "Geben Sie eine gültige Telefonnummer ein"
+                    }
+                },
+                "companyName": {
+                    "label": "Firmen-/Gruppenname (optional)",
+                    "placeholder": "Geben Sie Ihren Firmen- oder Gruppennamen ein"
+                }
+            },
+            "bookingDetails": {
+                "title": "Buchungsdetails",
+                "preferredHotel": {
+                    "label": "Bevorzugtes Hotel",
+                    "placeholder": "Wählen Sie ein Hotel",
+                    "error": "Bitte wählen Sie ein Hotel"
+                },
+                "arrivalDate": {
+                    "label": "Anreisedatum",
+                    "placeholder": "TT/MM/JJJJ",
+                    "error": {
+                        "required": "Anreisedatum ist erforderlich",
+                        "format": "Bitte geben Sie ein gültiges Datum ein",
+                        "future": "Anreisedatum muss in der Zukunft liegen"
+                    }
+                },
+                "numberOfNights": {
+                    "label": "Anzahl der Nächte",
+                    "placeholder": "Wählen Sie die Anzahl der Nächte",
+                    "error": "Anzahl der Nächte ist erforderlich"
+                },
+                "numberOfRooms": {
+                    "label": "Anzahl der Zimmer",
+                    "placeholder": "Geben Sie die Anzahl der Zimmer ein",
+                    "error": {
+                        "required": "Anzahl der Zimmer ist erforderlich",
+                        "min": "Mindestens 6 Zimmer erforderlich",
+                        "format": "Bitte geben Sie eine gültige Zahl ein"
+                    }
+                },
+                "bookingType": {
+                    "label": "Buchungsart",
+                    "options": {
+                        "individual": "Individuelle Zahlung",
+                        "group": "Gruppenzahlung"
+                    },
+                    "error": "Buchungsart ist erforderlich"
+                }
+            },
+            "enquiryDetails": {
+                "title": "Zusätzliche Informationen",
+                "additionalRequirements": {
+                    "label": "Zusätzliche Anforderungen",
+                    "placeholder": "Geben Sie zusätzliche Anforderungen oder Fragen ein",
+                    "maxLength": "Maximal 500 Zeichen"
+                }
+            }
+        },
+        "submit": "Anfrage senden",
+        "success": "Vielen Dank für Ihre Anfrage. Wir werden uns in Kürze bei Ihnen melden.",
+        "error": "Etwas ist schief gelaufen. Bitte versuchen Sie es erneut."
+    },
+    "footer": {
+        "privacyPolicy": "Datenschutzrichtlinie",
+        "termsAndConditions": "Allgemeine Geschäftsbedingungen"
+    },
+    "language": {
+        "switchTo": "Zu Englisch wechseln"
+    }
+}
