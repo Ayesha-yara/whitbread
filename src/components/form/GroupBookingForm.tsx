@@ -18,6 +18,25 @@ export default function GroupBookingForm() {
   const methods = useForm<GroupBookingFormData>({
     resolver: zodResolver(groupBookingSchema),
     mode: 'onBlur',
+    defaultValues: {
+      contactDetails: {
+        title: 'Mr',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+      },
+      bookingDetails: {
+        bookerType: 'Personal',
+      },
+      roomRequirements: {
+        rooms: {
+          singleOccupancy: 0,
+          doubleOccupancy: 0,
+          twinRooms: 0,
+        }
+      },
+    },
   });
 
   const { handleSubmit, setFocus, formState: { errors } } = methods;
@@ -44,7 +63,7 @@ export default function GroupBookingForm() {
       });
 
       if (response.ok) {
-        alert(t('successMessage')); // Localized success message
+        alert(t('successMessage'));
         methods.reset();
       } else {
         throw new Error(t('submissionError'));
@@ -81,7 +100,6 @@ export default function GroupBookingForm() {
           ]}
         />
 
-        {/* Submission Error Message */}
         {submissionError && (
           <div
             id="submission-error"

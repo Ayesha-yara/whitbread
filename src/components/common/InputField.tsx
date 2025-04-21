@@ -18,9 +18,9 @@ export default function InputField({ name, label, placeholder, type = 'text' }: 
   const errorMessage = fieldError?.message as string;
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-2">
       <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-        {label}
+        {label} {<span className="text-red-500">*</span>}
       </label>
       <input
         id={name}

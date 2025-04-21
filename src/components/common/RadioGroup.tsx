@@ -28,7 +28,7 @@ export default function RadioGroup({
   return (
     <div className="space-y-2">
       <label className="font-semibold">{label}</label>
-      <div className="space-y-1">
+      <div className="space-y-2">
         {options.map((option) => (
           <div key={option.value} className="flex items-center space-x-2">
             <input

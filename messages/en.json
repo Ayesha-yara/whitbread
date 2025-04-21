@@ -11,86 +11,132 @@
         "title": "Request a group booking",
         "subtitle": "Planning a group event and need 10 or more rooms?",
         "description": "Please fill out the form below and our team will get back to you as soon as possible.",
-            "contactDetails": {
-                "title": "Your Details",
-                "firstName": {
-                    "label": "First name",
-                    "placeholder": "Enter your first name",
-                    "error": "First name is required"
-                },
-                "lastName": {
-                    "label": "Last name",
-                    "placeholder": "Enter your last name",
-                    "error": "Last name is required"
-                },
-                "email": {
-                    "label": "Email address",
-                    "placeholder": "Enter your email address",
-                    "error": {
-                        "required": "Email address is required",
-                        "format": "Enter a valid email address"
-                    }
-                },
-                "phone": {
-                    "label": "Phone number",
-                    "placeholder": "Enter your phone number",
-                    "error": {
-                        "required": "Phone number is required",
-                        "format": "Enter a valid phone number"
-                    }
-                },
-                "companyName": {
-                    "label": "Company/Group name (optional)",
-                    "placeholder": "Enter your company or group name"
+        "contactDetails": {
+            "title": "Contact Details",
+            "titleField": {
+                "label": "Title",
+                "error": "Please select a title"
+            },
+            "firstName": {
+                "label": "First name",
+                "placeholder": "Enter your first name",
+                "error": "First name is required"
+            },
+            "lastName": {
+                "label": "Last name",
+                "placeholder": "Enter your last name",
+                "error": "Last name is required"
+            },
+            "email": {
+                "label": "Email address",
+                "placeholder": "Enter your email address",
+                "error": {
+                    "required": "Email address is required",
+                    "format": "Enter a valid email address"
                 }
             },
-            "bookingDetails": {
-                "title": "Booking Details",
-                "preferredHotel": {
-                    "label": "Preferred hotel",
-                    "placeholder": "Select a hotel",
-                    "error": "Please select a hotel"
+            "phone": {
+                "label": "Phone number",
+                "placeholder": "Enter your phone number",
+                "error": {
+                    "required": "Phone number is required",
+                    "format": "Enter a valid phone number"
+                }
+            }
+        },
+        "bookingDetails": {
+            "title": "Booking Details",
+            "bookerType": {
+                "label": "What type of booker are you?",
+                "placeholder": "Booker Type",
+                "options": {
+                    "personal": "Personal",
+                    "business": "Business",
+                    "travelManagementCompany": "Travel Management Company",
+                    "travelAgentOrTourOperator": "Travel Agent/Tour Operator"
                 },
-                "arrivalDate": {
-                    "label": "Arrival date",
-                    "placeholder": "DD/MM/YYYY",
-                    "error": {
-                        "required": "Arrival date is required",
-                        "format": "Please enter a valid date",
-                        "future": "Arrival date must be in the future"
-                    }
+                "error": "Please select a booker type"
+            },
+            "stayType": {
+                "label": "Is your group staying for Business or Leisure?",
+                "placeholder": "Stay Type",
+                "options": {
+                    "business": "Business",
+                    "leisure": "Leisure"
                 },
-                "numberOfNights": {
-                    "label": "Number of nights",
-                    "placeholder": "Select number of nights",
-                    "error": "Number of nights is required"
-                },
-                "numberOfRooms": {
-                    "label": "Number of rooms",
-                    "placeholder": "Enter number of rooms",
-                    "error": {
-                        "required": "Number of rooms is required",
-                        "min": "Minimum of 6 rooms required",
-                        "format": "Please enter a valid number"
-                    }
-                },
-                "bookingType": {
-                    "label": "Booking type",
-                    "options": {
-                        "individual": "Individual pay",
-                        "group": "Group pay"
-                    },
-                    "error": "Booking type is required"
+                "error": "Please select a stay type"
+            },
+            "isSchoolOrYouth": {
+                "label": "Please tick this box if you are booking for a school or youth group",
+                "error": "Please confirm if this is a school or youth group booking"
+            },
+            "reasonForVisit": {
+                "label": "What is the reason for your group's visit?",
+                "placeholder": "Select a reason",
+                "error": "Please select a reason before proceeding",
+                "options": {
+                    "association": "Association",
+                    "busTour": "Bus tour",
+                    "businessMeeting": "Business meeting",
+                    "charityEvent": "Charity event",
+                    "conventionConference": "Convention/Conference",
+                    "government": "Government",
+                    "graduationReunion": "Graduation/Reunion",
+                    "layover": "Layover",
+                    "leisureTour": "Leisure tour",
+                    "military": "Military",
+                    "musicBand": "Music band",
+                    "other": "Other",
+                    "religiousChurchEvent": "Religious/Church event",
+                    "schoolGroup": "School group",
+                    "sportEvent": "Sport event",
+                    "sportTeamAdult": "Sport team - Adult",
+                    "sportTeamYouth": "Sport team - Youth",
+                    "stagHenParty": "Stag/Hen party",
+                    "tradeFair": "Trade fair",
+                    "wedding": "Wedding",
+                    "workCrew": "Work crew",
+                    "youthGroup": "Youth group"
                 }
             },
-            "roomRequirements": {
-                "title": "Additional Information",
-                "additionalRequirements": {
-                    "label": "Additional requirements",
-                    "placeholder": "Enter any additional requirements or questions",
-                    "maxLength": "Maximum 500 characters"
+            "BookingDetails" : {
+                "label": "Booking details",
+                "textarea": "Our team will try to accommodate your group’s preferences in terms of hotels and dates. If that’s not possible, we’ll do everything we can to offer the best alternatives."
+            },
+            "packageType": {
+                "label": "Package type",
+                "placeholder": "Select a package type",
+                "options": {
+                    "PremierInnBreakfast": "Premier Inn Breakfast",
+                    "MealDeal": "Meal Deal(dinner, drink and breakfast)"
+                }
+            }
+        },
+        "roomRequirements": {
+            "title": "Rooms",
+            "description": "Select the maximum number of rooms required by room type and occupancy.",
+            "seeRoomTypes": "See room types",
+            "roomTypes": {
+                "singleOccupancy": {
+                    "label": "Single Occupancy",
+                    "description": "1 adult"
+                },
+                "doubleOccupancy": {
+                    "label": "Double Occupancy",
+                    "description": "2 adults"
+                },
+                "twin": {
+                    "label": "Twin",
+                    "description": "2 adults"
                 }
             },
+            "totalRooms": "Total: {count} rooms",
+            "additionalInformation": {
+                "label": "Additional information (optional)",
+                "placeholder": "Let us know if you have any additional information or special requests",
+                "note": "If you do not require the same number of rooms on each night of your stay, please state below the number and type of rooms required each night."
+            }
+        },
         "submit": "Submit Enquiry",
         "success": "Thank you for your enquiry. We will be in touch shortly.",
         "error": "Something went wrong. Please try again."
