@@ -34,6 +34,7 @@ export default function Accordion({ items, defaultOpenIndex = 0, onOpenIndexChan
           <div key={index} className="border-b last:border-none">
             <h3>
               <button
+                type="button"
                 onClick={() => toggleIndex(index)}
                 className="w-full flex justify-between items-center text-left font-semibold py-3 px-4 bg-gray-100 hover:bg-gray-200 focus:outline-none"
                 aria-expanded={isOpen} 
