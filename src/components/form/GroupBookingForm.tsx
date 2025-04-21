@@ -61,7 +61,7 @@ export default function GroupBookingForm() {
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       const firstErrorField = Object.keys(errors)[0];
-      setFocus(firstErrorField as keyof GroupBookingFormData);
+      setFocus(String(firstErrorField));
     }
   }, [errors, setFocus]);
 
