@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
-import { groupBookingSchema, GroupBookingFormData } from '@/lib/validation/groupBookingSchema';
+import { groupBookingSchema } from '@/lib/validation/groupBookingSchema';
+import { GroupBookingFormData } from '@/types/form';
 import Accordion from '@/components/common/Accodion';
 import ContactDetailsSection from './sections/ContactDetailsSection';
 import BookingDetailsSection from './sections/BookingDetailsSection';
@@ -27,7 +28,7 @@ export default function GroupBookingForm() {
         phoneNumber: '',
       },
       bookingDetails: {
-        bookerType: 'Personal',
+        bookerType: 'personal',
       },
       roomRequirements: {
         rooms: {
@@ -45,7 +46,7 @@ export default function GroupBookingForm() {
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       const firstErrorField = Object.keys(errors)[0];
-      setFocus(firstErrorField as keyof GroupBookingFormData);
+      setFocus(String(firstErrorField));
     }
   }, [errors, setFocus]);
 

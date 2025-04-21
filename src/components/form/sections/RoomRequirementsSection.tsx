@@ -1,7 +1,7 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
-import { GroupBookingFormData } from "@/lib/validation/groupBookingSchema";
+import { GroupBookingFormData } from "@/types/form";
 import CheckboxField from "@/components/common/CheckboxField";
 import QuantitySelector from "@/components/common/QuantitySelector";
 import TextArea from '@/components/common/TextArea';
