@@ -8,19 +8,28 @@ interface AccordionItem {
 interface AccordionProps {
   items: AccordionItem[];
   defaultOpenIndex?: number;
+  onOpenIndexChange?: (index: number) => void;
+  openIndex?: number;
 }
 
-export default function Accordion({ items, defaultOpenIndex = 0 }: AccordionProps) {
-  const [openIndex, setOpenIndex] = useState(defaultOpenIndex);
+export default function Accordion({ items, defaultOpenIndex = 0, onOpenIndexChange, openIndex: controlledOpenIndex }: AccordionProps) {
+  const [internalOpenIndex, setInternalOpenIndex] = useState(defaultOpenIndex);
+  
+  // Use either controlled or uncontrolled open index
+  const currentOpenIndex = controlledOpenIndex !== undefined ? controlledOpenIndex : internalOpenIndex;
 
   const toggleIndex = (index: number) => {
-    setOpenIndex(openIndex === index ? -1 : index);
+    const newIndex = currentOpenIndex === index ? -1 : index;
+    setInternalOpenIndex(newIndex);
+    if (onOpenIndexChange) {
+      onOpenIndexChange(newIndex);
+    }
   };
 
   return (
     <div className="border border-gray-300 rounded-lg divide-y divide-gray-300" role="region">
       {items.map((item, index) => {
-        const isOpen = openIndex === index;
+        const isOpen = currentOpenIndex === index;
         return (
           <div key={index} className="border-b last:border-none">
             <h3>

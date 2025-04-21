@@ -1,33 +1,58 @@
 import { GroupBookingFormData } from '../types/form';
 
+
+export interface StoredBooking {
+  id: string;
+  referenceNumber: string;
+  submittedAt: string;
+  data: GroupBookingFormData;
+}
+
 /**
  * In-memory storage for submitted form data
  */
-let bookingSubmissions: GroupBookingFormData[] = [];
+let bookingSubmissions: StoredBooking[] = [];
 
 /**
  * Get all booking submissions
  */
-export const getAllBookings = (): GroupBookingFormData[] => {
+export const getAllBookings = (): StoredBooking[] => {
   return [...bookingSubmissions];
 };
 
-/**
- * Add a new booking submission
- */
-export const addBooking = (booking: GroupBookingFormData): { id: string; data: GroupBookingFormData } => {
-  const id = `booking-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-  const bookingWithId = { ...booking };
+export const generateReferenceNumber = (): string => {
+  const now = new Date();
+  const year = now.getFullYear().toString().slice(-2);
+  const month = (now.getMonth() + 1).toString().padStart(2, '0');
+  const day = now.getDate().toString().padStart(2, '0');
+  const random = Math.random().toString(36).substring(2, 6).toUpperCase();
   
-  bookingSubmissions.push(bookingWithId);
-  
-  return { id, data: bookingWithId };
+  return `PI-${year}${month}${day}-${random}`;
 };
 
-/**
- * Get a booking by index
- */
-export const getBookingByIndex = (index: number): GroupBookingFormData | null => {
+export const addBooking = (booking: GroupBookingFormData): StoredBooking => {
+  const id = `booking-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+  const referenceNumber = generateReferenceNumber();
+  const submittedAt = new Date().toISOString();
+  
+  const storedBooking: StoredBooking = {
+    id,
+    referenceNumber,
+    submittedAt,
+    data: { ...booking }
+  };
+  
+  bookingSubmissions.push(storedBooking);
+  
+  return storedBooking;
+};
+
+export const getBookingByReference = (referenceNumber: string): StoredBooking | null => {
+  const booking = bookingSubmissions.find(b => b.referenceNumber === referenceNumber);
+  return booking || null;
+};
+
+export const getBookingByIndex = (index: number): StoredBooking | null => {
   if (index >= 0 && index < bookingSubmissions.length) {
     return bookingSubmissions[index];
   }
@@ -35,10 +60,17 @@ export const getBookingByIndex = (index: number): GroupBookingFormData | null =>
 };
 
 /**
- * Clear all bookings (for testing)
+ * Clear all bookings (for testing purposes)
  */
-export const clearBookings = (): void => {
+export const clearAllBookings = (): void => {
   bookingSubmissions = [];
+};
+
+/**
+ * Get the total number of bookings
+ */
+export const getBookingCount = (): number => {
+  return bookingSubmissions.length;
 };
 
 /**

@@ -66,37 +66,39 @@ export async function POST(request: NextRequest) {
 /**
  * Basic validation for booking data
  */
-function isValidBookingData(data: any): boolean {
-  if (!data) return false;
+function isValidBookingData(data: unknown): boolean {
+  if (!data || typeof data !== 'object' || data === null) return false;
   
-  // Check if required sections exist
-  if (!data.contactInformation || !data.bookingDetails || !data.roomRequirements) {
+  const bookingData = data as Record<string, unknown>;
+  
+  if (!bookingData.contactDetails || 
+      !bookingData.bookingDetails || 
+      !bookingData.roomRequirements ||
+      typeof bookingData.contactDetails !== 'object' ||
+      typeof bookingData.bookingDetails !== 'object' ||
+      typeof bookingData.roomRequirements !== 'object') {
     return false;
   }
   
-  // Check for required fields in contactInformation
-  const { contactInformation } = data;
-  if (!contactInformation.firstName || 
-      !contactInformation.lastName || 
-      !contactInformation.email || 
-      !contactInformation.phoneNumber) {
+  const contactDetails = bookingData.contactDetails as Record<string, unknown>;
+  if (!contactDetails.firstName || 
+      !contactDetails.lastName || 
+      !contactDetails.email || 
+      !contactDetails.phoneNumber ||
+      typeof contactDetails.firstName !== 'string' ||
+      typeof contactDetails.lastName !== 'string' ||
+      typeof contactDetails.email !== 'string' ||
+      typeof contactDetails.phoneNumber !== 'string') {
     return false;
   }
   
-  // Check for required fields in bookingDetails
-  const { bookingDetails } = data;
-  if (!bookingDetails.dateRange || !bookingDetails.location) {
+  const bookingDetails = bookingData.bookingDetails as Record<string, unknown>;
+  if (!bookingDetails.dates || typeof bookingDetails.dates !== 'object') {
     return false;
   }
   
-  // Check for required fields in roomRequirements
-  const { roomRequirements } = data;
-  if (roomRequirements.numberOfRooms <= 0 || roomRequirements.numberOfGuests <= 0) {
-    return false;
-  }
-  
-  // Check if terms are accepted
-  if (!data.termsAccepted) {
+  const roomRequirements = bookingData.roomRequirements as Record<string, unknown>;
+  if (!roomRequirements.rooms || typeof roomRequirements.rooms !== 'object') {
     return false;
   }
   
@@ -106,40 +108,42 @@ function isValidBookingData(data: any): boolean {
 /**
  * Returns validation errors for booking data
  */
-function validateBookingData(data: any): Record<string, string[]> {
+function validateBookingData(data: unknown): Record<string, string[]> {
   const errors: Record<string, string[]> = {};
   
-  if (!data) {
+  if (!data || typeof data !== 'object' || data === null) {
     errors.general = ['No data provided'];
     return errors;
   }
   
-  // Contact information validation
-  if (!data.contactInformation) {
-    errors['contactInformation'] = ['Contact information is required'];
+  const bookingData = data as Record<string, unknown>;
+  
+  // Contact details validation
+  if (!bookingData.contactDetails || typeof bookingData.contactDetails !== 'object') {
+    errors['contactDetails'] = ['Contact details are required'];
   } else {
-    const { contactInformation } = data;
+    const contactDetails = bookingData.contactDetails as Record<string, unknown>;
     const contactErrors: string[] = [];
     
-    if (!contactInformation.firstName) contactErrors.push('First name is required');
-    if (!contactInformation.lastName) contactErrors.push('Last name is required');
-    if (!contactInformation.email) contactErrors.push('Email is required');
-    if (!contactInformation.phoneNumber) contactErrors.push('Phone number is required');
+    if (!contactDetails.firstName) contactErrors.push('First name is required');
+    if (!contactDetails.lastName) contactErrors.push('Last name is required');
+    if (!contactDetails.email) contactErrors.push('Email is required');
+    if (!contactDetails.phoneNumber) contactErrors.push('Phone number is required');
     
     if (contactErrors.length > 0) {
-      errors['contactInformation'] = contactErrors;
+      errors['contactDetails'] = contactErrors;
     }
   }
   
   // Booking details validation
-  if (!data.bookingDetails) {
+  if (!bookingData.bookingDetails || typeof bookingData.bookingDetails !== 'object') {
     errors['bookingDetails'] = ['Booking details are required'];
   } else {
-    const { bookingDetails } = data;
+    const bookingDetails = bookingData.bookingDetails as Record<string, unknown>;
     const bookingErrors: string[] = [];
     
-    if (!bookingDetails.dateRange) bookingErrors.push('Date range is required');
-    if (!bookingDetails.location) bookingErrors.push('Location is required');
+    if (!bookingDetails.dates) bookingErrors.push('Dates are required');
+    if (!bookingDetails.preferredHotel) bookingErrors.push('Preferred hotel is required');
     
     if (bookingErrors.length > 0) {
       errors['bookingDetails'] = bookingErrors;
@@ -147,15 +151,24 @@ function validateBookingData(data: any): Record<string, string[]> {
   }
   
   // Room requirements validation
-  if (!data.roomRequirements) {
+  if (!bookingData.roomRequirements || typeof bookingData.roomRequirements !== 'object') {
     errors['roomRequirements'] = ['Room requirements are required'];
   } else {
-    const { roomRequirements } = data;
+    const roomRequirements = bookingData.roomRequirements as Record<string, unknown>;
     const roomErrors: string[] = [];
     
-    if (!roomRequirements.roomType) roomErrors.push('Room type is required');
-    if (roomRequirements.numberOfRooms <= 0) roomErrors.push('Number of rooms must be greater than 0');
-    if (roomRequirements.numberOfGuests <= 0) roomErrors.push('Number of guests must be greater than 0');
+    if (!roomRequirements.rooms) roomErrors.push('Room information is required');
+    
+    if (roomRequirements.rooms && typeof roomRequirements.rooms === 'object') {
+      const rooms = roomRequirements.rooms as Record<string, unknown>;
+      const totalRooms = Object.values(rooms).reduce((sum: number, count) => {
+        return sum + (typeof count === 'number' ? count : 0);
+      }, 0);
+      
+      if (totalRooms <= 0) {
+        roomErrors.push('At least one room must be selected');
+      }
+    }
     
     if (roomErrors.length > 0) {
       errors['roomRequirements'] = roomErrors;
@@ -163,7 +176,8 @@ function validateBookingData(data: any): Record<string, string[]> {
   }
   
   // Terms validation
-  if (!data.termsAccepted) {
+  const enquiryData = data as Record<string, unknown>;
+  if (typeof enquiryData.termsAccepted !== 'boolean' || !enquiryData.termsAccepted) {
     errors['terms'] = ['You must accept the terms and conditions'];
   }
   
