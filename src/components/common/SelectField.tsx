@@ -1,20 +1,20 @@
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, get } from 'react-hook-form';
 
 type SelectFieldProps = {
   name: string;
   label: string;
   options: { value: string; label: string }[];
   placeholder?: string;
-  isRequired?: boolean;
 };
 
-export default function SelectField({ name, label, options, placeholder, isRequired }: SelectFieldProps) {
+export default function SelectField({ name, label, options, placeholder }: SelectFieldProps) {
   const {
     register,
     formState: { errors },
   } = useFormContext();
 
-  const error = errors[name]?.message as string;
+  const fieldError = get(errors, name);
+  const errorMessage = fieldError?.message as string;
 
   return (
     <div className="space-y-1">
@@ -23,10 +23,11 @@ export default function SelectField({ name, label, options, placeholder, isRequi
       </label>
       <select
         id={name}
-        {...register(name, { required: isRequired })}
+        {...register(name)}
         className={`block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-          error ? 'border-red-500' : 'border-gray-300'
+          errorMessage ? 'border-red-500' : 'border-gray-300'
         }`}
+        aria-invalid={errorMessage ? 'true' : 'false'}
       >
         {placeholder && <option value="">{placeholder}</option>}
         {options.map((option) => (
@@ -35,7 +36,7 @@ export default function SelectField({ name, label, options, placeholder, isRequi
           </option>
         ))}
       </select>
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {errorMessage && <p className="text-sm text-red-500" role="alert">{errorMessage}</p>}
     </div>
   );
 }

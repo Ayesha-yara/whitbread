@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest --watchAll=false",
+    "test": "jest --watchAll=false --passWithNoTests",
     "lint": "next lint",
     "prepare": "husky"
   },

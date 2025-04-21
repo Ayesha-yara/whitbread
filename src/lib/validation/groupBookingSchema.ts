@@ -1,53 +1,76 @@
 import { z } from 'zod';
 
-const titleEnum = z.enum([
-  'Mr', 'Mrs', 'Ms', 'Miss', 'Mx', 'Master', 'Dr', 'Lord', 'Lady', 'Sir', 'Col', 'Prof', 'Rev'
-]);
+const titleEnum = z.enum(
+  ['Mr', 'Mrs', 'Ms', 'Miss', 'Mx', 'Master', 'Dr', 'Lord', 'Lady', 'Sir', 'Col', 'Prof', 'Rev'],
+  {
+    errorMap: () => ({ message: 'Please select a valid title' })
+  }
+);
 
-const bookerTypeEnum = z.enum([
-  'Personal',
-  'Business',
-  'Travel-Management-Company',
-  'Travel-Agent/Tour-Operator'
-]);
+const bookerTypeEnum = z.enum(
+  [
+    'personal',
+    'business',
+    'travel-management-company',
+    'travel-agent/tour-operator'
+  ],
+  {
+    errorMap: () => ({ message: 'Please select your booker type' })
+  }
+);
 
-const purposeOfStayEnum = z.enum(['Business', 'Leisure']);
+const purposeOfStayEnum = z.enum(
+  ['business', 'leisure'],
+  {
+    errorMap: () => ({ message: 'Please select whether your stay is for business or leisure' })
+  }
+);
 
-const reasonForVisitEnum = z.enum([
-  'Association',
-  'Bus tour',
-  'Business meeting',
-  'Charity event',
-  'Convention/Conference',
-  'Government',
-  'Graduation/Reunion',
-  'Layover',
-  'Leisure tour',
-  'Military',
-  'Music band',
-  'Other',
-  'Religious/Church event',
-  'School group',
-  'Sport event',
-  'Sport team - Adult',
-  'Sport team - Youth',
-  'Stag/Hen party',
-  'Trade fair',
-  'Wedding',
-  'Work crew',
-  'Youth group'
-]);
+const reasonForVisitEnum = z.enum(
+  [
+    'association',
+    'bus-tour',
+    'business-meeting',
+    'charity-event',
+    'convention-conference',
+    'government',
+    'graduation-reunion',
+    'layover',
+    'leisure-tour',
+    'military',
+    'music-band',
+    'other',
+    'religious-church-event',
+    'school-group',
+    'sport-event',
+    'sport-team-adult',
+    'sport-team-youth',
+    'stag-hen-party',
+    'trade-fair',
+    'wedding',
+    'work-crew',
+    'youth-group'
+  ],
+  {
+    errorMap: () => ({ message: 'Please select a reason for your visit' })
+  }
+);
 
-const packageTypeEnum = z.enum(['BREAKFAST', 'MEALDEAL']);
+const packageTypeEnum = z.enum(
+  ['breakfast', 'meal-deal'],
+  {
+    errorMap: () => ({ message: 'Please select a package type' })
+  }
+);
 
 export const groupBookingSchema = z.object({
   contactDetails: z.object({
     title: titleEnum,
-    firstName: z.string().min(1, 'First name is required').max(30),
-    lastName: z.string().min(1, 'Last name is required').max(30),
-    phoneNumber: z.string().min(1, 'Phone number is required')
-      .regex(/^[0-9+\-\s()]+$/, 'Invalid phone number format'),
-    email: z.string().min(1, 'Email is required').email('Invalid email format')
+    firstName: z.string().min(1, 'Please enter your first name').max(30, 'First name cannot exceed 30 characters'),
+    lastName: z.string().min(1, 'Please enter your last name').max(30, 'Last name cannot exceed 30 characters'),
+    phoneNumber: z.string().min(1, 'Please enter your phone number')
+      .regex(/^[0-9+\-\s()]+$/, 'Please enter a valid phone number'),
+    email: z.string().min(1, 'Please enter your email address').email('Please enter a valid email address')
   }),
   
   bookingDetails: z.object({
@@ -55,10 +78,10 @@ export const groupBookingSchema = z.object({
     purposeOfStay: purposeOfStayEnum,
     isSchoolOrYouth: z.boolean(),
     reasonForVisit: reasonForVisitEnum,
-    preferredHotel: z.string().min(1, 'Hotel preference is required'),
+    preferredHotel: z.string().min(1, 'Please enter your preferred hotel'),
     dates: z.object({
-      checkIn: z.string().min(1, 'Check-in date is required'),
-      checkOut: z.string().min(1, 'Check-out date is required')
+      checkIn: z.string().min(1, 'Please select a check-in date'),
+      checkOut: z.string().min(1, 'Please select a check-out date')
     }),
     packageType: packageTypeEnum
   }),
@@ -67,29 +90,29 @@ export const groupBookingSchema = z.object({
     isTravellingWithChild: z.boolean(),
     isAccessibleRoom: z.boolean(),
     rooms: z.object({
-      singleOccupancy: z.number().min(0),
-      doubleOccupancy: z.number().min(0),
-      twinRooms: z.number().min(0),
-      familyOf21A1C: z.number().min(0),
-      familyOf32A1C: z.number().min(0),
-      familyOf31A2C: z.number().min(0),
-      familyOf42A2C: z.number().min(0),
-      accessibleSingle: z.number().min(0),
-      accessibleDouble: z.number().min(0),
-      accessibleTwin: z.number().min(0)
+      singleOccupancy: z.number().min(0, 'Room count cannot be negative'),
+      doubleOccupancy: z.number().min(0, 'Room count cannot be negative'),
+      twinRooms: z.number().min(0, 'Room count cannot be negative'),
+      familyOf21A1C: z.number().min(0, 'Room count cannot be negative'),
+      familyOf32A1C: z.number().min(0, 'Room count cannot be negative'),
+      familyOf31A2C: z.number().min(0, 'Room count cannot be negative'),
+      familyOf42A2C: z.number().min(0, 'Room count cannot be negative'),
+      accessibleSingle: z.number().min(0, 'Room count cannot be negative'),
+      accessibleDouble: z.number().min(0, 'Room count cannot be negative'),
+      accessibleTwin: z.number().min(0, 'Room count cannot be negative')
     }).refine(
       (data) => {
         const total = Object.values(data).reduce((sum, count) => sum + count, 0);
         return total > 0;
       },
       {
-        message: 'At least one room must be selected'
+        message: 'Please select at least one room for your booking'
       }
     )
   }),
   
   additionalInformation: z.object({
-    comments: z.string().max(1000).optional()
+    comments: z.string().max(1000, 'Comments cannot exceed 1000 characters').optional()
   })
 });
 

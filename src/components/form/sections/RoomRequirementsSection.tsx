@@ -1,32 +1,15 @@
 "use client";
 
 import { useFormContext } from "react-hook-form";
-import { useTranslations } from "next-intl";
 import { GroupBookingFormData } from "@/lib/validation/groupBookingSchema";
 import CheckboxField from "@/components/common/CheckboxField";
-import NumberInputField from "@/components/common/NumberInputField";
 import QuantitySelector from "@/components/common/QuantitySelector";
 import TextArea from '@/components/common/TextArea';
 
-type RoomOption = {
-  id: keyof GroupBookingFormData["roomRequirements"]["rooms"];
-  label: string;
-  description: string;
-};
-
-const roomOptions: RoomOption[] = [
-  { id: "singleOccupancy", label: "Single Occupancy", description: "1 adult" },
-  { id: "doubleOccupancy", label: "Double Occupancy", description: "2 adults" },
-  { id: "twinRooms", label: "Twin", description: "2 adults" },
-];
-
 export default function RoomRequirementsSection() {
-  const t = useTranslations("form");
   const {
-    register,
     watch,
     setValue,
-    formState: { errors },
   } = useFormContext<GroupBookingFormData>();
 
   const rooms = watch("roomRequirements.rooms") || {};
@@ -35,20 +18,6 @@ export default function RoomRequirementsSection() {
     (sum, count) => sum + count,
     0
   );
-
-  const handleIncrement = (
-    roomType: keyof GroupBookingFormData["roomRequirements"]["rooms"]
-  ) => {
-    setValue(`roomRequirements.rooms.${roomType}`, (rooms[roomType] || 0) + 1);
-  };
-
-  const handleDecrement = (
-    roomType: keyof GroupBookingFormData["roomRequirements"]["rooms"]
-  ) => {
-    if (rooms[roomType] > 0) {
-      setValue(`roomRequirements.rooms.${roomType}`, rooms[roomType] - 1);
-    }
-  };
 
   return (
     <div className='space-y-6'>
@@ -67,10 +36,13 @@ export default function RoomRequirementsSection() {
 
       <div className='space-y-2'>
         <CheckboxField
-          name='withChildren'
+          name='roomRequirements.isTravellingWithChild'
           label='Travelling/staying with children (2-15 years).'
         />
-        <CheckboxField name='accessibleRoom' label='Accessible room is needed.' />
+        <CheckboxField 
+          name='roomRequirements.isAccessibleRoom' 
+          label='Accessible room is needed.' 
+        />
       </div>
 
       <div className='space-y-4 border-b border-gray-200 pb-6'>
@@ -115,7 +87,7 @@ export default function RoomRequirementsSection() {
           night.
         </p>
         <TextArea
-          name="additionalInfo"
+          name="additionalInformation.comments"
           rows={5}
           placeholder="Enter additional information or special requests here"
         />
