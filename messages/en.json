@@ -84,7 +84,7 @@
                     "future": "Arrival date must be in the future"
                 }
             },
-            "BookingDetails" : {
+            "BookingDetails": {
                 "label": "Booking details",
                 "textarea": "Our team will try to accommodate your group’s preferences in terms of hotels and dates. If that’s not possible, we’ll do everything we can to offer the best alternatives."
             },
@@ -103,7 +103,10 @@
             "title": "Rooms",
             "description": "Select the maximum number of rooms required by room type and occupancy.",
             "seeRoomTypes": "See room types",
+            "travellingWithChildren": "Travelling/staying with children (2-15 years).",
+            "accessibleRoom": "Accessible room is needed.",
             "roomTypes": {
+                "title": "Room types",
                 "singleOccupancy": {
                     "label": "Single Occupancy",
                     "description": "1 adult"

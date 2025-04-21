@@ -66,6 +66,7 @@ export default function BookingDetailsSection() {
           options={bookerTypeOptions}
           value={bookerType}
           onChange={(value) => handleRadioChange('bookerType', value)}
+          aria-labelledby="bookerType-label"
         />
       </div>
 
@@ -77,14 +78,16 @@ export default function BookingDetailsSection() {
             value: option.value,
             label: t(`stayType.options.${option.value}`),
           }))}
-          value={purposeOfStay} // Bind the selected value
+          value={purposeOfStay}
           onChange={(value) => handleRadioChange('purposeOfStay', value)}
+          aria-labelledby="purpose-of-stay-title"
         />
       </div>
 
       <CheckboxField
         label={t('isSchoolOrYouth.label')}
         {...register('bookingDetails.isSchoolOrYouth')}
+        aria-describedby="school-or-youth-description"
       />
 
       <div>
@@ -93,6 +96,7 @@ export default function BookingDetailsSection() {
           label={t('reasonForVisit.label')}
           options={reasonForVisitOptions}
           placeholder={t('reasonForVisit.placeholder')}
+          aria-labelledby="reason-for-visit-title"
         />
       </div>
 
@@ -104,6 +108,7 @@ export default function BookingDetailsSection() {
           placeholder={t('prefferedHotel.placeholder')}
           label={t('prefferedHotel.label')}
           name="bookingDetails.preferredHotel"
+          aria-describedby="preferred-hotel-description"
         />
         <div className="mt-4">
           <DateRangeInputField
@@ -112,6 +117,7 @@ export default function BookingDetailsSection() {
             startDate={new Date()}
             endDate={new Date(new Date().setFullYear(new Date().getFullYear() + 3))}
             onChange={handleDateChange}
+            aria-labelledby="dates-title"
           />
         </div>
       </div>
@@ -124,6 +130,7 @@ export default function BookingDetailsSection() {
           options={packageOptions}
           value={packageType}
           onChange={(value) => handleRadioChange('packageType', value)}
+          aria-labelledby="package-type-title"
         />
       </div>
     </div>

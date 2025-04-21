@@ -17,16 +17,18 @@ export default function DateRangeInputField({
   onChange,
 }: DateRangeInputFieldProps) {
   const [isPickerOpen, setPickerOpen] = useState(false);
-  const [displayValue, setDisplayValue] = useState('');
+  const [selectedDates, setSelectedDates] = useState<{ startDate: Date | null; endDate: Date | null }>({
+    startDate: null,
+    endDate: null,
+  });
 
   const handleDateChange = (dates: { startDate: Date | null; endDate: Date | null }) => {
-    onChange(dates);
+    setSelectedDates(dates);
+
     if (dates.startDate && dates.endDate) {
-      setDisplayValue(
-        `${dates.startDate.toLocaleDateString()} - ${dates.endDate.toLocaleDateString()}`
-      );
+      setPickerOpen(false);
+      onChange(dates);
     }
-    setPickerOpen(false);
   };
 
   return (
@@ -38,7 +40,11 @@ export default function DateRangeInputField({
         type="text"
         id={name}
         name={name}
-        value={displayValue}
+        value={
+          selectedDates.startDate && selectedDates.endDate
+            ? `${selectedDates.startDate.toLocaleDateString()} - ${selectedDates.endDate.toLocaleDateString()}`
+            : ''
+        }
         readOnly
         onClick={() => setPickerOpen(true)}
         className="block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
@@ -47,8 +53,9 @@ export default function DateRangeInputField({
       {isPickerOpen && (
         <div className="absolute z-10 bg-white shadow-lg border rounded-md mt-2">
           <DateRangePicker
-            startDate={startDate}
-            endDate={endDate}
+            startDate={selectedDates.startDate}
+            endDate={selectedDates.endDate}
+            minDate={new Date()} // Restrict to forward dates only
             onChange={handleDateChange}
           />
         </div>
