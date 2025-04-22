@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import DateRangePicker from '@/components/common/DateRangePicker';
-
+import { format } from 'date-fns';
 
 type DateRangeInputFieldProps = {
   label: string;
@@ -19,7 +19,7 @@ export default function DateRangeInputField({
   required = true,
   onChange,
 }: DateRangeInputFieldProps) {
-
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isPickerOpen, setPickerOpen] = useState(false);
   const [selectedDates, setSelectedDates] = useState<{ startDate: Date | null; endDate: Date | null }>({
     startDate: null,
@@ -28,30 +28,27 @@ export default function DateRangeInputField({
 
   const handleDateChange = (dates: { startDate: Date | null; endDate: Date | null }) => {
     setSelectedDates(dates);
-
-    if (dates.startDate && dates.endDate) {
-      setPickerOpen(false);
-      onChange(dates);
-    }
   };
-  
-  // Close the picker when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (isPickerOpen && !target.closest('.date-range-picker-container')) {
-        setPickerOpen(false);
-      }
-    };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isPickerOpen]);
+  const handleApply = (dates: { startDate: Date | null; endDate: Date | null }) => {
+    setSelectedDates(dates);
+    setPickerOpen(false);
+    onChange(dates);
+  };
+
+  const handleCancel = () => {
+    setPickerOpen(false);
+  };
+
+  const formatDateRange = () => {
+    if (selectedDates.startDate && selectedDates.endDate) {
+      return `${format(selectedDates.startDate, 'dd/MM/yyyy')} - ${format(selectedDates.endDate, 'dd/MM/yyyy')}`;
+    }
+    return '';
+  };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 relative" ref={containerRef}>
       <label htmlFor={name} className="block text-sm font-medium text-gray-700">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
@@ -59,24 +56,22 @@ export default function DateRangeInputField({
         type="text"
         id={name}
         name={name}
-        value={
-          selectedDates.startDate && selectedDates.endDate
-            ? `${selectedDates.startDate.toLocaleDateString()} - ${selectedDates.endDate.toLocaleDateString()}`
-            : ''
-        }
+        value={formatDateRange()}
         readOnly
         onClick={() => setPickerOpen(true)}
-        className="block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300"
+        className="block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm border-gray-300 cursor-pointer"
         placeholder="Select a date range"
       />
       {isPickerOpen && (
-        <div className="absolute z-10 bg-white shadow-lg border rounded-md mt-2 date-range-picker-container">
+        <div className="absolute z-50 mt-2 date-range-picker-container">
           <DateRangePicker
             startDate={selectedDates.startDate}
             endDate={selectedDates.endDate}
             minDate={new Date()}
             maxDate={maxDate}
             onChange={handleDateChange}
+            onApply={handleApply}
+            onCancel={handleCancel}
           />
         </div>
       )}
