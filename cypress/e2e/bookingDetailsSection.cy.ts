@@ -39,8 +39,8 @@ describe('Booking Details Section', () => {
   });
 
   it('should allow selecting a package type', () => {
-    cy.get('input[name="packageType"][value="meal-deal"]').click();
-    cy.get('input[name="packageType"][value="meal-deal"]').should('be.checked');
+    cy.get('input[name="bookingDetails.packageType"][value="meal-deal"]').click();
+    cy.get('input[name="bookingDetails.packageType"][value="meal-deal"]').should('be.checked');
   });
 
 });

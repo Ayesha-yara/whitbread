@@ -76,12 +76,12 @@
                 "error": "Please select a reason before proceeding"
             },
             "dates": {
-                "label": "Arrival date",
+                "label": "Check-in | Check-out date",
                 "placeholder": "DD/MM/YYYY",
                 "error": {
-                    "required": "Arrival date is required",
+                    "required": "Check-in | Check-out date is required",
                     "format": "Please enter a valid date",
-                    "future": "Arrival date must be in the future"
+                    "future": "Check-out date must be in the future"
                 }
             },
             "BookingDetails": {
