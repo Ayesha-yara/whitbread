@@ -1,5 +1,6 @@
 "use client";
 
+import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { GroupBookingFormData } from '@/types/form';
 import InputField from '@/components/common/InputField';

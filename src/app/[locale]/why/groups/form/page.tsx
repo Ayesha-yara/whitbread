@@ -1,22 +1,7 @@
 import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
-import { Metadata } from "next";
 import { Suspense } from "react";
 import BookingEnquiryForm from "@/components/form/GroupBookingForm";
 import LanguageSwitcher from "@/components/common/LanguageSwitcher";
-
-export async function generateMetadata({
-  params: { locale },
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
-  const t = await getTranslations({ locale, namespace: "meta" });
-
-  return {
-    title: t("title"),
-    description: t("description"),
-  };
-}
 
 export default function GroupBookingPage() {
   const t = useTranslations("form");

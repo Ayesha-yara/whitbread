@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm, FormProvider, Path } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
@@ -8,7 +8,7 @@ import {
   groupBookingSchema,
   GroupBookingFormData,
 } from "@/lib/validation/groupBookingSchema";
-import Accordion from "@/components/common/Accodion";
+import Accordion from "@/components/common/Accordion";
 import ContactDetailsSection from "./sections/ContactDetailsSection";
 import BookingDetailsSection from "./sections/BookingDetailsSection";
 import RoomRequirementsSection from "./sections/RoomRequirementsSection";

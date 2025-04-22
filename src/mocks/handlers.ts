@@ -1,37 +1,27 @@
-import { http } from 'msw';
-
-// Define the type for the request body
-interface GroupBookingRequestBody {
-  contactDetails: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-  };
-  bookingDetails: {
-    bookerType: string;
-    purposeOfStay: string;
-    reasonForVisit?: string;
-    preferredHotel?: string;
-    dates?: {
-      checkIn: string;
-      checkOut: string;
-    };
-  };
-  roomRequirements: {
-    rooms: Record<string, number>;
-    isTravellingWithChild?: boolean;
-    isAccessibleRoom?: boolean;
-  };
-}
+import { http, HttpResponse } from 'msw';
 
 export const handlers = [
-  http.post('/api/submit-group-booking', (req, res, ctx) => {
+  http.post('/api/submit-group-booking', async ({ request }) => {
+    const data = await request.json();
     const {
       contactDetails,
       bookingDetails,
       roomRequirements,
-    } = req.body as GroupBookingRequestBody;
+    } = data as {
+      contactDetails?: {
+        firstName?: string;
+        lastName?: string;
+        email?: string;
+        phoneNumber?: string;
+      };
+      bookingDetails?: {
+        bookerType?: string;
+        purposeOfStay?: string;
+      };
+      roomRequirements?: {
+        rooms?: Record<string, number>;
+      };
+    };
 
     // Validate required fields
     if (
@@ -43,15 +33,21 @@ export const handlers = [
       !bookingDetails?.purposeOfStay ||
       !roomRequirements?.rooms
     ) {
-      return res(
-        ctx.status(400),
-        ctx.json({ message: 'All required fields must be filled.' })
+      return new HttpResponse(
+        JSON.stringify({
+          success: false,
+          message: 'Missing required fields',
+        }),
+        { status: 400 }
       );
     }
 
-    return res(
-      ctx.status(200),
-      ctx.json({ message: 'Group booking form submitted successfully.' })
+    return new HttpResponse(
+      JSON.stringify({
+        success: true,
+        message: 'Group booking form submitted successfully.',
+      }),
+      { status: 200 }
     );
   }),
 ];
