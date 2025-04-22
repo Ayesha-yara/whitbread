@@ -29,7 +29,7 @@ export default function RadioGroup({
 
   return (
     <div className="space-y-2">
-      <label className="font-semibold">{label} {required && <span className="text-red-500">*</span>}</label>
+      <label className="font-semibold block">{label} {required && <span className="text-red-500">*</span>}</label>
       <div className="space-y-2">
         {options.map((option) => (
           <div key={option.value} className="flex items-center space-x-2">

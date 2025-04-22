@@ -1,22 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Whitbread Group Booking Form
+
+This is a **Next.js** project for managing group booking enquiries. It includes a multi-step form for collecting contact details, booking details, and room requirements. The project uses **React Hook Form**, **Zod** for validation, and **Mock Service Worker (MSW)** for API mocking during development and testing.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Development Server
+
+To start the development server, run:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Project Structure
+Key Directories and Files
+src/components/form: Contains the main form components:
+
+GroupBookingForm.tsx: The main form component.
+sections/ContactDetailsSection.tsx: Handles contact details input.
+sections/BookingDetailsSection.tsx: Handles booking details input.
+sections/RoomRequirementsSection.tsx: Handles room requirements input.
+src/lib: Contains utility functions and API logic:
+
+api.ts: Functions for interacting with the backend API.
+mockData.ts: Mock data for development and testing.
+src/app/api: API routes for handling form submissions:
+
+bookings/route.ts: Handles GET and POST requests for bookings.
+tests: Contains unit and integration tests:
+
+_mocks_: Mock handlers for API testing using MSW.
+groupbookingform.test.tsx: Tests for the GroupBookingForm component.
+cypress/e2e: End-to-end tests for the form:
+
+groupBookingForm.cy.ts: Tests the entire form workflow.
+contactDetailsSection.cy.ts: Tests the contact details section.
+bookingDetailsSection.cy.ts: Tests the booking details section.
+roomRequirementsSection.cy.ts: Tests the room requirements section.
+
+Features
+Multi-Step Form:
+
+Collects contact details, booking details, and room requirements.
+Validates input using Zod.
+API Integration:
+
+Submits form data to /api/bookings.
+Mocked API responses for development and testing using MSW.
+Accessibility:
+
+Uses aria-* attributes for better screen reader support.
+Includes data-cy attributes for Cypress testing.
+Testing:
+
+Unit tests with React Testing Library and Jest.
+End-to-end tests with Cypress.
+
+Running Tests
+Unit Tests
+Run unit tests using Jest:
+
+End-to-End Tests
+Run Cypress tests:
+npx cypress open
+This will open the Cypress Test Runner. You can select the test files to run.
+
+Mock API
+This project uses Mock Service Worker (MSW) for API mocking during development and testing.
+
+Starting the Mock Server
+The mock server is automatically started in development mode. To manually start it, add the following to your index.tsx:
+if (process.env.NODE_ENV === 'development') {
+  const { worker } = require('./src/mocks/browser');
+  worker.start();
+}
+
+Deployment
+To deploy the application, use the Vercel Platform:
+
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
