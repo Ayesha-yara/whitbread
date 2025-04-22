@@ -29,8 +29,9 @@ export default function SelectField({ name, label, options, placeholder, require
           errorMessage ? 'border-red-500' : 'border-gray-300'
         }`}
         aria-invalid={errorMessage ? 'true' : 'false'}
+        defaultValue=""
       >
-        {placeholder && <option value="">{placeholder}</option>}
+        <option value="">{placeholder || 'Please select...'}</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

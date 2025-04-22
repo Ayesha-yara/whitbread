@@ -294,35 +294,8 @@ export default function GroupBookingForm() {
                       type="button"
                       className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       onClick={() => {
-                        const contactFields = ["contactDetails.firstName", "contactDetails.lastName", "contactDetails.email", "contactDetails.phoneNumber"];
-                        let hasErrors = false;
-                        const errorMessages: string[] = [];
-                        
-                        contactFields.forEach(field => {
-            
-          
-                          if (!methods.getValues(field as any)) {
-                            const fieldPath = field.split('.');
-                            const fieldName = getReadableFieldLabel(fieldPath);
-            
-                            methods.setError(field as any, { type: "required", message: "This field is required" });
-                            errorMessages.push(`${fieldName}: This field is required`);
-                            hasErrors = true;
-                          }
-                        });
-                        
-                        if (hasErrors) {
-                          setValidationErrors(errorMessages);
-                          setTimeout(() => {
-                            window.scrollTo({
-                              top: 0,
-                              behavior: 'smooth'
-                            });
-                          }, 100);
-                        } else {
-                          setValidationErrors([]);
-                          setActiveSection(1);
-                        }
+                        setValidationErrors([]);
+                        setActiveSection(1);
                       }}
                     >
                       Continue to Booking Details
@@ -348,36 +321,8 @@ export default function GroupBookingForm() {
                       type="button"
                       className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       onClick={() => {
-                        const bookingFields = ["bookingDetails.preferredHotel", "bookingDetails.dates.checkIn", "bookingDetails.dates.checkOut"];
-                        let hasErrors = false;
-                        const errorMessages: string[] = [];
-                        
-                        bookingFields.forEach(field => {
-            
-          
-                          if (!methods.getValues(field as any)) {
-                            const fieldPath = field.split('.');
-                            const fieldName = getReadableFieldLabel(fieldPath);
-            
-                            methods.setError(field as any, { type: "required", message: "This field is required" });
-                            errorMessages.push(`${fieldName}: This field is required`);
-                            hasErrors = true;
-                          }
-                        });
-                        
-                        if (hasErrors) {
-                          setValidationErrors(errorMessages);
-          
-                          setTimeout(() => {
-                            window.scrollTo({
-                              top: 0,
-                              behavior: 'smooth'
-                            });
-                          }, 100);
-                        } else {
-                          setValidationErrors([]);
-                          setActiveSection(2);
-                        }
+                        setValidationErrors([]);
+                        setActiveSection(2);
                       }}
                     >
                       Continue to Room Requirements
@@ -420,7 +365,6 @@ export default function GroupBookingForm() {
             aria-disabled={isSubmitting}
             onClick={() => {
               const allRequiredFields = [
-
                 "contactDetails.firstName", 
                 "contactDetails.lastName", 
                 "contactDetails.email", 
@@ -429,14 +373,12 @@ export default function GroupBookingForm() {
                 "bookingDetails.preferredHotel", 
                 "bookingDetails.dates.checkIn", 
                 "bookingDetails.dates.checkOut"
-
               ];
               
               let hasErrors = false;
               const errorMessages: string[] = [];
               
               allRequiredFields.forEach(field => {
-
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 if (!methods.getValues(field as any)) {
                   const fieldPath = field.split('.');
@@ -448,6 +390,7 @@ export default function GroupBookingForm() {
                   hasErrors = true;
                 }
               });
+              
               const rooms = methods.getValues("roomRequirements.rooms");
               const totalRooms = Object.values(rooms || {}).reduce((sum, count) => sum + (typeof count === 'number' ? count : 0), 0);
               if (totalRooms <= 0) {

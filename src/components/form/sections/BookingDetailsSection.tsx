@@ -129,7 +129,7 @@ export default function BookingDetailsSection() {
       <div>
         <p className="text-sm text-gray-500 mb-3">{t('packageType.description')}</p>
         <RadioGroup
-          name="packageType"
+          name="bookingDetails.packageType"
           label={t('packageType.label')}
           options={packageOptions}
           value={packageType}

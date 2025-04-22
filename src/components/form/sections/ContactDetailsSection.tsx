@@ -25,6 +25,7 @@ export default function ContactDetailsSection() {
           name="contactDetails.title"
           label={t("contactDetails.titleField.label")}
           options={titles}
+          placeholder="Please select a title"
           required={true}
         />
         <InputField

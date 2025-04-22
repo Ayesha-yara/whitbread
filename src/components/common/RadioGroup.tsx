@@ -38,7 +38,7 @@ export default function RadioGroup({
               id={`${groupId}-${option.value}`}
               name={name}
               value={option.value}
-              checked={value === option.value}
+              checked={value === option.value && value !== undefined && value !== ''}
               onChange={(e) => onChange?.(e.target.value)}
               className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
             />
