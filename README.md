@@ -106,8 +106,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Page Speed Insights - Lighthouse
 
-![image](https://github.com/user-attachments/assets/71d1a4b4-e768-4282-889e-b35625076575)
-Mobile: ![image](https://github.com/user-attachments/assets/ba4f5058-bd78-4d1b-bf5f-f5341b23d3b5)
+![image](https://github.com/user-attachments/assets/a4da6132-9abb-4e58-a78c-a0cd5ac61112)
+
+Mobile: ![image](https://github.com/user-attachments/assets/8d29b82e-0cce-4393-a788-ec38af103924)
 
 
 
