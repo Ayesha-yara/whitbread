@@ -193,7 +193,7 @@ export default function GroupBookingForm() {
   };
 
   return (
-    <div className="p-6 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="text-gray-900 dark:text-gray-100" style={{ color: 'var(--text-primary)' }}>
       <FormProvider {...methods}>
         {submissionSuccess && (
           <div
@@ -243,13 +243,19 @@ export default function GroupBookingForm() {
           <div
             id="validation-errors"
             role="alert"
-            className="bg-yellow-50 dark:bg-yellow-800 border border-yellow-200 dark:border-yellow-600 text-yellow-800 dark:text-yellow-300 rounded-lg p-4 mb-6"
+            className="rounded-lg p-5 mb-6 shadow-md"
+            style={{ 
+              backgroundColor: 'var(--error-bg)', 
+              borderLeft: '4px solid var(--error-color)',
+              color: 'var(--error-text)'
+            }}
           >
             <div className="flex">
               <svg
-                className="w-5 h-5 mr-2 mt-1 flex-shrink-0"
-                fill="currentColor"
+                className="w-6 h-6 mr-3 flex-shrink-0"
+                fill="var(--error-color)"
                 viewBox="0 0 20 20"
+                style={{ color: 'var(--error-color)' }}
               >
                 <path
                   fillRule="evenodd"
@@ -258,12 +264,12 @@ export default function GroupBookingForm() {
                 />
               </svg>
               <div>
-                <p className="font-medium mb-2">
+                <p className="font-semibold text-lg mb-3" style={{ color: 'var(--error-color)' }}>
                   Please fix the following errors:
                 </p>
-                <ul className="list-disc pl-5 space-y-1">
+                <ul className="list-disc pl-5 space-y-2">
                   {validationErrors.map((error, index) => (
-                    <li key={index}>{error}</li>
+                    <li key={index} className="text-sm">{error}</li>
                   ))}
                 </ul>
               </div>
@@ -338,7 +344,8 @@ export default function GroupBookingForm() {
                       {activeSection < 2 ? (
                         <button
                           type="button"
-                          className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="primary flex items-center px-4 py-2 text-sm font-medium text-white rounded focus:outline-none focus:ring-2"
+                          style={{ backgroundColor: 'var(--primary)' }}
                           onClick={() => setActiveSection(activeSection + 1)}
                         >
                           Continue
@@ -501,7 +508,8 @@ export default function GroupBookingForm() {
                       {activeSection < 2 ? (
                         <button
                           type="button"
-                          className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="primary flex items-center px-4 py-2 text-sm font-medium text-white rounded focus:outline-none focus:ring-2"
+                          style={{ backgroundColor: 'var(--primary)' }}
                           onClick={() => setActiveSection(activeSection + 1)}
                         >
                           Continue
@@ -664,7 +672,8 @@ export default function GroupBookingForm() {
                       {activeSection < 2 ? (
                         <button
                           type="button"
-                          className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="primary flex items-center px-4 py-2 text-sm font-medium text-white rounded focus:outline-none focus:ring-2"
+                          style={{ backgroundColor: 'var(--primary)' }}
                           onClick={() => setActiveSection(activeSection + 1)}
                         >
                           Continue

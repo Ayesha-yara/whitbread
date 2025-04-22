@@ -29,20 +29,27 @@ export default function RadioGroup({
 
   return (
     <div className="space-y-2">
-      <label className="font-semibold block">{label} {required && <span className="text-red-500">*</span>}</label>
-      <div className="space-y-2">
+      <label className="font-semibold block" style={{ color: 'var(--label-color)' }}>{label} {required && <span style={{ color: 'var(--error-color)' }}>*</span>}</label>
+      <div className="mt-2 space-y-4">
         {options.map((option) => (
-          <div key={option.value} className="flex items-center space-x-2">
-            <input
-              type="radio"
-              id={`${groupId}-${option.value}`}
-              name={name}
-              value={option.value}
-              checked={value === option.value && value !== undefined && value !== ''}
-              onChange={(e) => onChange?.(e.target.value)}
-              className="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-            />
-            <label htmlFor={`${groupId}-${option.value}`} className="text-sm">
+          <div key={option.value} className="grid grid-cols-[auto_1fr] items-center pl-4">
+            <div className="flex items-center">
+              <input
+                type="radio"
+                id={`${groupId}-${option.value}`}
+                name={name}
+                value={option.value}
+                checked={value === option.value && value !== undefined && value !== ''}
+                onChange={(e) => onChange?.(e.target.value)}
+                className="h-5 w-5 text-primary border-gray-300 focus:ring-primary"
+                style={{ accentColor: 'var(--primary)' }}
+              />
+            </div>
+            <label 
+              htmlFor={`${groupId}-${option.value}`}
+              className="ml-3 text-sm font-medium cursor-pointer"
+              style={{ color: 'var(--text-primary)' }}
+            >
               {option.label}
             </label>
           </div>

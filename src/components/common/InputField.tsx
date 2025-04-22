@@ -21,20 +21,25 @@ export default function InputField({ name, label, placeholder, type = 'text', re
 
   return (
     <div className="space-y-2">
-      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-        {label} {required && <span className="text-red-500">*</span>}
+      <label htmlFor={name} className="block text-sm font-medium" style={{ color: 'var(--label-color)' }}>
+        {label} {required && <span style={{ color: 'var(--error-color)' }}>*</span>}
       </label>
       <input
         id={name}
         {...register(name)}
         placeholder={placeholder}
         type={type}
-        className={`block w-full px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
-          errorMessage ? 'border-red-500' : 'border-gray-300'
+        className={`block w-full px-3 py-2 border rounded-md shadow-sm sm:text-sm ${
+          errorMessage ? 'error' : ''
         }`}
+        style={{
+          backgroundColor: 'var(--input-bg)',
+          color: 'var(--input-text)',
+          borderColor: errorMessage ? 'var(--error-color)' : 'var(--input-border)'
+        }}
         aria-invalid={errorMessage ? 'true' : 'false'}
       />
-      {errorMessage && <p className="text-sm text-red-500" role="alert">{errorMessage}</p>}
+      {errorMessage && <p className="text-sm error-message" role="alert" style={{ color: 'var(--error-color)' }}>{errorMessage}</p>}
     </div>
   );
 }

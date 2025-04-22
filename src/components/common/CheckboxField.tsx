@@ -9,14 +9,21 @@ export default function CheckboxField({ name, label }: CheckboxFieldProps) {
   const { register } = useFormContext();
 
   return (
-    <div className="flex items-center space-x-2">
-      <input
-        id={name}
-        type="checkbox"
-        {...register(name)}
-        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-      />
-      <label htmlFor={name} className="text-sm text-gray-700">
+    <div className="grid grid-cols-[auto_1fr] items-center py-2 pl-4">
+      <div className="flex items-center">
+        <input
+          id={name}
+          type="checkbox"
+          {...register(name)}
+          className="h-5 w-5 rounded text-primary border-gray-300 focus:ring-primary"
+          style={{ accentColor: 'var(--primary)' }}
+        />
+      </div>
+      <label 
+        htmlFor={name} 
+        className="ml-3 text-sm font-medium cursor-pointer"
+        style={{ color: 'var(--text-primary)' }}
+      >
         {label}
       </label>
     </div>
