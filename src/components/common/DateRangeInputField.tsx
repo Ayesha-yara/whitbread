@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DateRangePicker from '@/components/common/DateRangePicker';
+
 
 type DateRangeInputFieldProps = {
   label: string;
   name: string;
-  startDate: Date;
-  endDate: Date;
+  startDate?: Date;
+  endDate?: Date;
+  maxDate?: Date;
+  required?: boolean;
   onChange: (dates: { startDate: Date | null; endDate: Date | null }) => void;
 };
 
 export default function DateRangeInputField({
   label,
   name,
-  startDate,
-  endDate,
+  maxDate,
+  required = true,
   onChange,
 }: DateRangeInputFieldProps) {
+
   const [isPickerOpen, setPickerOpen] = useState(false);
   const [selectedDates, setSelectedDates] = useState<{ startDate: Date | null; endDate: Date | null }>({
     startDate: null,
@@ -30,11 +34,26 @@ export default function DateRangeInputField({
       onChange(dates);
     }
   };
+  
+  // Close the picker when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isPickerOpen && !target.closest('.date-range-picker-container')) {
+        setPickerOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isPickerOpen]);
 
   return (
     <div className="space-y-2">
       <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-        {label}
+        {label} {required && <span className="text-red-500">*</span>}
       </label>
       <input
         type="text"
@@ -51,11 +70,12 @@ export default function DateRangeInputField({
         placeholder="Select a date range"
       />
       {isPickerOpen && (
-        <div className="absolute z-10 bg-white shadow-lg border rounded-md mt-2">
+        <div className="absolute z-10 bg-white shadow-lg border rounded-md mt-2 date-range-picker-container">
           <DateRangePicker
             startDate={selectedDates.startDate}
             endDate={selectedDates.endDate}
-            minDate={new Date()} // Restrict to forward dates only
+            minDate={new Date()}
+            maxDate={maxDate}
             onChange={handleDateChange}
           />
         </div>

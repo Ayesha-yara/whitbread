@@ -5,10 +5,11 @@ type InputFieldProps = {
   label: string;
   placeholder?: string;
   type?: string;
+  required?: boolean;
   error?: FieldError;
 };
 
-export default function InputField({ name, label, placeholder, type = 'text' }: InputFieldProps) {
+export default function InputField({ name, label, placeholder, type = 'text', required = true }: InputFieldProps) {
   const {
     register,
     formState: { errors },
@@ -20,7 +21,7 @@ export default function InputField({ name, label, placeholder, type = 'text' }: 
   return (
     <div className="space-y-2">
       <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-        {label} {<span className="text-red-500">*</span>}
+        {label} {required && <span className="text-red-500">*</span>}
       </label>
       <input
         id={name}

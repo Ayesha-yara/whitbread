@@ -13,6 +13,7 @@ interface RadioGroupProps {
   error?: FieldError;
   onChange?: (value: string) => void;
   value?: string;
+  required?: boolean;
 }
 
 export default function RadioGroup({
@@ -22,12 +23,13 @@ export default function RadioGroup({
   error,
   onChange,
   value,
+  required = true,
 }: RadioGroupProps) {
   const groupId = useId();
 
   return (
     <div className="space-y-2">
-      <label className="font-semibold">{label}</label>
+      <label className="font-semibold">{label} {required && <span className="text-red-500">*</span>}</label>
       <div className="space-y-2">
         {options.map((option) => (
           <div key={option.value} className="flex items-center space-x-2">

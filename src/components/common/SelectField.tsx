@@ -5,9 +5,10 @@ type SelectFieldProps = {
   label: string;
   options: { value: string; label: string }[];
   placeholder?: string;
+  required?: boolean;
 };
 
-export default function SelectField({ name, label, options, placeholder }: SelectFieldProps) {
+export default function SelectField({ name, label, options, placeholder, required = true }: SelectFieldProps) {
   const {
     register,
     formState: { errors },
@@ -19,7 +20,7 @@ export default function SelectField({ name, label, options, placeholder }: Selec
   return (
     <div className="space-y-2">
       <label htmlFor={name} className="block text-sm font-medium text-gray-700">
-        {label} {<span className="text-red-500">*</span>}
+        {label} {required && <span className="text-red-500">*</span>}
       </label>
       <select
         id={name}

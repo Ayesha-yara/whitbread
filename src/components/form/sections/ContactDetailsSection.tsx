@@ -25,27 +25,32 @@ export default function ContactDetailsSection() {
           name="contactDetails.title"
           label={t("contactDetails.titleField.label")}
           options={titles}
+          required={true}
         />
         <InputField
           name="contactDetails.firstName"
           label={t("contactDetails.firstName.label")}
           placeholder={t("contactDetails.firstName.placeholder")}
+          required={true}
         />
         <InputField
           name="contactDetails.lastName"
           label={t("contactDetails.lastName.label")}
           placeholder={t("contactDetails.lastName.placeholder")}
+          required={true}
         />
         <InputField
           name="contactDetails.email"
           label={t("contactDetails.email.label")}
           placeholder={t("contactDetails.email.placeholder")}
           type="email"
+          required={true}
         />
         <InputField
           name="contactDetails.phoneNumber"
           label={t("contactDetails.phone.label")}
           placeholder={t("contactDetails.phone.placeholder")}
+          required={true}
         />
       </div>
     </div>

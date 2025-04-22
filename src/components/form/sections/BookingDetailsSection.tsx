@@ -67,6 +67,7 @@ export default function BookingDetailsSection() {
           value={bookerType}
           onChange={(value) => handleRadioChange('bookerType', value)}
           aria-labelledby="bookerType-label"
+          required={true}
         />
       </div>
 
@@ -81,6 +82,7 @@ export default function BookingDetailsSection() {
           value={purposeOfStay}
           onChange={(value) => handleRadioChange('purposeOfStay', value)}
           aria-labelledby="purpose-of-stay-title"
+          required={true}
         />
       </div>
 
@@ -97,6 +99,7 @@ export default function BookingDetailsSection() {
           options={reasonForVisitOptions}
           placeholder={t('reasonForVisit.placeholder')}
           aria-labelledby="reason-for-visit-title"
+          required={true}
         />
       </div>
 
@@ -109,15 +112,16 @@ export default function BookingDetailsSection() {
           label={t('prefferedHotel.label')}
           name="bookingDetails.preferredHotel"
           aria-describedby="preferred-hotel-description"
+          required={true}
         />
         <div className="mt-4">
           <DateRangeInputField
             label={t('dates.label')}
             name="bookingDetails.dates"
-            startDate={new Date()}
-            endDate={new Date(new Date().setFullYear(new Date().getFullYear() + 3))}
+            maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 2))}
             onChange={handleDateChange}
             aria-labelledby="dates-title"
+            required={true}
           />
         </div>
       </div>
@@ -131,6 +135,7 @@ export default function BookingDetailsSection() {
           value={packageType}
           onChange={(value) => handleRadioChange('packageType', value)}
           aria-labelledby="package-type-title"
+          required={true}
         />
       </div>
     </div>
