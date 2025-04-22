@@ -104,8 +104,6 @@ export default function GroupBookingForm() {
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       const firstErrorField = Object.keys(errors)[0];
-      // We need to use 'any' here because the field path can be nested (e.g., 'contactDetails.firstName')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setFocus(firstErrorField as any);
     }
   }, [errors, setFocus]);
@@ -113,7 +111,6 @@ export default function GroupBookingForm() {
   const onSubmit = async (data: GroupBookingFormData) => {
     console.log('onSubmit called with data:', data);
     
-    // Reset states
     setIsSubmitting(true);
     setSubmissionError(null);
     setSubmissionSuccess(false);
@@ -266,7 +263,6 @@ export default function GroupBookingForm() {
               const errorMessages: string[] = [];
               Object.entries(errors).forEach(([field, error]) => {
                 if (error?.message) {
-                  // Get a human-readable field name
                   const fieldPath = field.split('.');
                   const fieldName = getReadableFieldLabel(fieldPath);
                   errorMessages.push(`${fieldName}: ${error.message}`);
@@ -305,12 +301,10 @@ export default function GroupBookingForm() {
                         contactFields.forEach(field => {
             
           
-                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           if (!methods.getValues(field as any)) {
                             const fieldPath = field.split('.');
                             const fieldName = getReadableFieldLabel(fieldPath);
             
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             methods.setError(field as any, { type: "required", message: "This field is required" });
                             errorMessages.push(`${fieldName}: This field is required`);
                             hasErrors = true;
@@ -354,7 +348,6 @@ export default function GroupBookingForm() {
                       type="button"
                       className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       onClick={() => {
-
                         const bookingFields = ["bookingDetails.preferredHotel", "bookingDetails.dates.checkIn", "bookingDetails.dates.checkOut"];
                         let hasErrors = false;
                         const errorMessages: string[] = [];
@@ -362,12 +355,10 @@ export default function GroupBookingForm() {
                         bookingFields.forEach(field => {
             
           
-                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           if (!methods.getValues(field as any)) {
                             const fieldPath = field.split('.');
                             const fieldName = getReadableFieldLabel(fieldPath);
             
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             methods.setError(field as any, { type: "required", message: "This field is required" });
                             errorMessages.push(`${fieldName}: This field is required`);
                             hasErrors = true;
@@ -422,6 +413,8 @@ export default function GroupBookingForm() {
         <div className="mt-6 text-right">
           <button
             type="button"
+            id="submit-button"
+            data-cy="submit-button"
             className={`px-6 py-3 text-white font-semibold rounded-lg flex items-center justify-center min-w-[150px] ${isSubmitting ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
             disabled={isSubmitting}
             aria-disabled={isSubmitting}

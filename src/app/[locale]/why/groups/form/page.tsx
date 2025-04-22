@@ -29,10 +29,10 @@ export default function GroupBookingPage() {
         </div>
         
         <div className='text-center mb-8'>
-          <h1 className='text-xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-4'>
+          <h2 className='font-bold text-gray-900 sm:text-xl mb-4'>
             {t("title")}
-          </h1>
-          <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
+          </h2>
+          <p className='text-md text-gray-600 max-w-2xl mx-auto'>
             {t("description")}
           </p>
         </div>

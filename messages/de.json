@@ -8,86 +8,123 @@
         "subtitle": "Für Buchungen von 6 oder mehr Zimmern"
     },
     "form": {
-        "sections": {
-            "personalDetails": {
-                "title": "Ihre Daten",
-                "firstName": {
-                    "label": "Vorname",
-                    "placeholder": "Geben Sie Ihren Vornamen ein",
-                    "error": "Vorname ist erforderlich"
-                },
-                "lastName": {
-                    "label": "Nachname",
-                    "placeholder": "Geben Sie Ihren Nachnamen ein",
-                    "error": "Nachname ist erforderlich"
-                },
-                "email": {
-                    "label": "E-Mail-Adresse",
-                    "placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
-                    "error": {
-                        "required": "E-Mail-Adresse ist erforderlich",
-                        "format": "Geben Sie eine gültige E-Mail-Adresse ein"
-                    }
-                },
-                "phone": {
-                    "label": "Telefonnummer",
-                    "placeholder": "Geben Sie Ihre Telefonnummer ein",
-                    "error": {
-                        "required": "Telefonnummer ist erforderlich",
-                        "format": "Geben Sie eine gültige Telefonnummer ein"
-                    }
-                },
-                "companyName": {
-                    "label": "Firmen-/Gruppenname (optional)",
-                    "placeholder": "Geben Sie Ihren Firmen- oder Gruppennamen ein"
+        "title": "Gruppenbuchung anfragen",
+        "subtitle": "Planen Sie eine Gruppenveranstaltung und benötigen 10 oder mehr Zimmer?",
+        "description": "Bitte füllen Sie das untenstehende Formular aus, und unser Team wird sich so schnell wie möglich bei Ihnen melden.",
+        "contactDetails": {
+            "title": "Kontaktdaten",
+            "titleField": {
+                "label": "Anrede",
+                "error": "Bitte wählen Sie eine Anrede aus"
+            },
+            "firstName": {
+                "label": "Vorname",
+                "placeholder": "Geben Sie Ihren Vornamen ein",
+                "error": "Vorname ist erforderlich"
+            },
+            "lastName": {
+                "label": "Nachname",
+                "placeholder": "Geben Sie Ihren Nachnamen ein",
+                "error": "Nachname ist erforderlich"
+            },
+            "email": {
+                "label": "E-Mail-Adresse",
+                "placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
+                "error": {
+                    "required": "E-Mail-Adresse ist erforderlich",
+                    "format": "Geben Sie eine gültige E-Mail-Adresse ein"
                 }
             },
-            "bookingDetails": {
-                "title": "Buchungsdetails",
-                "preferredHotel": {
-                    "label": "Bevorzugtes Hotel",
-                    "placeholder": "Wählen Sie ein Hotel",
-                    "error": "Bitte wählen Sie ein Hotel"
+            "phone": {
+                "label": "Telefonnummer",
+                "placeholder": "Geben Sie Ihre Telefonnummer ein",
+                "error": {
+                    "required": "Telefonnummer ist erforderlich",
+                    "format": "Geben Sie eine gültige Telefonnummer ein"
+                }
+            }
+        },
+        "bookingDetails": {
+            "title": "Buchungsdetails",
+            "bookerType": {
+                "label": "Welche Art von Bucher sind Sie?",
+                "placeholder": "Buchertyp",
+                "options": {
+                    "personal": "Privat",
+                    "business": "Geschäftlich",
+                    "travelManagementCompany": "Reise-Management-Unternehmen",
+                    "travelAgentOrTourOperator": "Reisebüro/Reiseveranstalter"
                 },
-                "arrivalDate": {
-                    "label": "Anreisedatum",
-                    "placeholder": "TT/MM/JJJJ",
-                    "error": {
-                        "required": "Anreisedatum ist erforderlich",
-                        "format": "Bitte geben Sie ein gültiges Datum ein",
-                        "future": "Anreisedatum muss in der Zukunft liegen"
-                    }
+                "error": "Bitte wählen Sie einen Buchertyp aus"
+            },
+            "stayType": {
+                "label": "Bleibt Ihre Gruppe geschäftlich oder privat?",
+                "placeholder": "Aufenthaltstyp",
+                "options": {
+                    "business": "Geschäftlich",
+                    "leisure": "Privat"
                 },
-                "numberOfNights": {
-                    "label": "Anzahl der Nächte",
-                    "placeholder": "Wählen Sie die Anzahl der Nächte",
-                    "error": "Anzahl der Nächte ist erforderlich"
-                },
-                "numberOfRooms": {
-                    "label": "Anzahl der Zimmer",
-                    "placeholder": "Geben Sie die Anzahl der Zimmer ein",
-                    "error": {
-                        "required": "Anzahl der Zimmer ist erforderlich",
-                        "min": "Mindestens 6 Zimmer erforderlich",
-                        "format": "Bitte geben Sie eine gültige Zahl ein"
-                    }
-                },
-                "bookingType": {
-                    "label": "Buchungsart",
-                    "options": {
-                        "individual": "Individuelle Zahlung",
-                        "group": "Gruppenzahlung"
-                    },
-                    "error": "Buchungsart ist erforderlich"
+                "error": "Bitte wählen Sie einen Aufenthaltstyp aus"
+            },
+            "isSchoolOrYouth": {
+                "label": "Bitte markieren Sie dieses Kästchen, wenn Sie für eine Schul- oder Jugendgruppe buchen",
+                "error": "Bitte bestätigen Sie, ob dies eine Buchung für eine Schul- oder Jugendgruppe ist"
+            },
+            "reasonForVisit": {
+                "label": "Was ist der Grund für den Besuch Ihrer Gruppe?",
+                "placeholder": "Wählen Sie einen Grund aus",
+                "error": "Bitte wählen Sie einen Grund aus, bevor Sie fortfahren"
+            },
+            "dates": {
+                "label": "Anreisedatum",
+                "placeholder": "TT/MM/JJJJ",
+                "error": {
+                    "required": "Anreisedatum ist erforderlich",
+                    "format": "Bitte geben Sie ein gültiges Datum ein",
+                    "future": "Das Anreisedatum muss in der Zukunft liegen"
                 }
             },
-            "enquiryDetails": {
-                "title": "Zusätzliche Informationen",
-                "additionalRequirements": {
-                    "label": "Zusätzliche Anforderungen",
-                    "placeholder": "Geben Sie zusätzliche Anforderungen oder Fragen ein",
-                    "maxLength": "Maximal 500 Zeichen"
+            "BookingDetails": {
+                "label": "Buchungsdetails",
+                "textarea": "Unser Team wird versuchen, die Präferenzen Ihrer Gruppe in Bezug auf Hotels und Daten zu berücksichtigen. Falls dies nicht möglich ist, werden wir unser Bestes tun, um die besten Alternativen anzubieten."
+            },
+            "prefferedHotel": {
+                "label": "Bevorzugtes Hotel",
+                "placeholder": "Wählen Sie ein Hotel",
+                "error": "Bitte wählen Sie ein Hotel aus"
+            },
+            "packageType": {
+                "label": "Pakettyp",
+                "placeholder": "Wählen Sie einen Pakettyp",
+                "description": "Vorbehaltlich Verfügbarkeit. Nur Zimmer sind für Gruppenbuchungen nicht verfügbar."
+            }
+        },
+        "roomRequirements": {
+            "title": "Zimmer",
+            "description": "Wählen Sie die maximale Anzahl der benötigten Zimmer nach Zimmertyp und Belegung aus.",
+            "seeRoomTypes": "Zimmertypen anzeigen",
+            "travellingWithChildren": "Reisen/Übernachten mit Kindern (2-15 Jahre).",
+            "accessibleRoom": "Barrierefreies Zimmer wird benötigt.",
+            "roomTypes": {
+                "title": "Zimmertypen",
+                "singleOccupancy": {
+                    "label": "Einzelbelegung",
+                    "description": "1 Erwachsener"
+                },
+                "doubleOccupancy": {
+                    "label": "Doppelbelegung",
+                    "description": "2 Erwachsene"
+                },
+                "twin": {
+                    "label": "Zweibettzimmer",
+                    "description": "2 Erwachsene"
                 }
+            },
+            "totalRooms": "Gesamt: {count} Zimmer",
+            "additionalInformation": {
+                "label": "Zusätzliche Informationen (optional)",
+                "placeholder": "Teilen Sie uns mit, ob Sie zusätzliche Informationen oder spezielle Wünsche haben",
+                "note": "Wenn Sie nicht jede Nacht die gleiche Anzahl an Zimmern benötigen, geben Sie bitte unten die Anzahl und den Typ der Zimmer an, die jede Nacht benötigt werden."
             }
         },
         "submit": "Anfrage senden",
