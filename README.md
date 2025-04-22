@@ -15,6 +15,7 @@ npm run dev
 ```
 
 Open [[http://localhost:3000](http://localhost:3000)](https://whitbread-o2kh-4lnmams74-ayesha-yaras-projects.vercel.app/en/why/groups/form) with your browser to see the result.
+https://whitbread-o2kh.vercel.app/de/why/groups/form
 
 ## **Project Structure**
 **Key Directories and Files**
@@ -63,6 +64,7 @@ End-to-end tests with Cypress.
 **Running Tests**
 Unit Tests
 Run unit tests using Jest:
+npm run test
 
 **End-to-End Tests**
 Run Cypress tests:
