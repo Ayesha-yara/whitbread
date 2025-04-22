@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import BookingEnquiryForm from "@/components/form/GroupBookingForm";
 import LanguageSwitcher from "@/components/common/LanguageSwitcher";
+import DarkModeToggle from "@/components/common/DarkModeToggle";
 
 export async function generateMetadata({
   params: { locale },

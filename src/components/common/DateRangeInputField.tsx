@@ -63,7 +63,6 @@ export default function DateRangeInputField({
         placeholder="Select a date range"
       />
       {isPickerOpen && (
-        <div className="absolute z-50 mt-2 date-range-picker-container">
           <DateRangePicker
             startDate={selectedDates.startDate}
             endDate={selectedDates.endDate}
@@ -73,7 +72,6 @@ export default function DateRangeInputField({
             onApply={handleApply}
             onCancel={handleCancel}
           />
-        </div>
       )}
     </div>
   );
