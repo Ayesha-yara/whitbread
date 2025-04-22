@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, Path } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import {
@@ -104,7 +104,7 @@ export default function GroupBookingForm() {
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       const firstErrorField = Object.keys(errors)[0];
-      setFocus(firstErrorField as any);
+      setFocus(firstErrorField as Path<GroupBookingFormData>);
     }
   }, [errors, setFocus]);
 
@@ -118,7 +118,7 @@ export default function GroupBookingForm() {
       setIsDarkMode(false);
       root.classList.remove('dark');
     }
-  }, []);
+  }, [isDarkMode]);
 
   const onSubmit = async (data: GroupBookingFormData) => {
     console.log("onSubmit called with data:", data);
@@ -173,8 +173,7 @@ export default function GroupBookingForm() {
         if (result.errors) {
           Object.entries(result.errors).forEach(([field, messages]) => {
             if (Array.isArray(messages) && messages.length > 0) {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              methods.setError(field as any, {
+              methods.setError(field as Path<GroupBookingFormData>, {
                 type: "server",
                 message: messages[0],
               });
@@ -385,13 +384,13 @@ export default function GroupBookingForm() {
                             const errorMessages: string[] = [];
 
                             allRequiredFields.forEach((field) => {
-                              if (!methods.getValues(field as any)) {
+                              if (!methods.getValues(field as Path<GroupBookingFormData>)) {
                                 const fieldPath = field.split(".");
                                 const fieldName = getReadableFieldLabel(
                                   fieldPath
                                 );
 
-                                methods.setError(field as any, {
+                                methods.setError(field as Path<GroupBookingFormData>, {
                                   type: "required",
                                   message: "This field is required",
                                 });
@@ -548,13 +547,13 @@ export default function GroupBookingForm() {
                             const errorMessages: string[] = [];
 
                             allRequiredFields.forEach((field) => {
-                              if (!methods.getValues(field as any)) {
+                              if (!methods.getValues(field as Path<GroupBookingFormData>)) {
                                 const fieldPath = field.split(".");
                                 const fieldName = getReadableFieldLabel(
                                   fieldPath
                                 );
 
-                                methods.setError(field as any, {
+                                methods.setError(field as Path<GroupBookingFormData>, {
                                   type: "required",
                                   message: "This field is required",
                                 });
@@ -711,13 +710,13 @@ export default function GroupBookingForm() {
                             const errorMessages: string[] = [];
 
                             allRequiredFields.forEach((field) => {
-                              if (!methods.getValues(field as any)) {
+                              if (!methods.getValues(field as Path<GroupBookingFormData>)) {
                                 const fieldPath = field.split(".");
                                 const fieldName = getReadableFieldLabel(
                                   fieldPath
                                 );
 
-                                methods.setError(field as any, {
+                                methods.setError(field as Path<GroupBookingFormData>, {
                                   type: "required",
                                   message: "This field is required",
                                 });

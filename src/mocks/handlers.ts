@@ -1,12 +1,37 @@
-import {  } from 'msw';
+import { http } from 'msw';
+
+// Define the type for the request body
+interface GroupBookingRequestBody {
+  contactDetails: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+  };
+  bookingDetails: {
+    bookerType: string;
+    purposeOfStay: string;
+    reasonForVisit?: string;
+    preferredHotel?: string;
+    dates?: {
+      checkIn: string;
+      checkOut: string;
+    };
+  };
+  roomRequirements: {
+    rooms: Record<string, number>;
+    isTravellingWithChild?: boolean;
+    isAccessibleRoom?: boolean;
+  };
+}
 
 export const handlers = [
-  rest.post('/api/submit-group-booking', (req, res, ctx) => {
+  http.post('/api/submit-group-booking', (req, res, ctx) => {
     const {
       contactDetails,
       bookingDetails,
       roomRequirements,
-    } = req.body as Record<string, any>;
+    } = req.body as GroupBookingRequestBody;
 
     // Validate required fields
     if (

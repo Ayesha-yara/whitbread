@@ -1,6 +1,3 @@
-import {useTranslations} from 'next-intl';
-import {Link} from '@/i18n/navigation';
-import {Suspense} from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
