@@ -26,9 +26,11 @@ export default function RoomRequirementsSection() {
         </p>
         <p className="text-sm text-gray-600 mb-4">{t("description")}</p>
         <a
-          href="#"
+          href="https://www.premierinn.com/gb/en/sleep/our-rooms.html"
           className="text-purple-700 text-sm hover:underline mb-4 inline-block"
           aria-label={t("seeRoomTypes")}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {t("seeRoomTypes")}
         </a>
