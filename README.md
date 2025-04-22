@@ -14,7 +14,7 @@ To start the development server, run:
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [[http://localhost:3000](http://localhost:3000)](https://whitbread-o2kh-4lnmams74-ayesha-yaras-projects.vercel.app/en/why/groups/form) with your browser to see the result.
 
 ## **Project Structure**
 **Key Directories and Files**
@@ -99,3 +99,11 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Page Speed Insights - Lighthouse
+
+![image](https://github.com/user-attachments/assets/71d1a4b4-e768-4282-889e-b35625076575)
+Mobile: ![image](https://github.com/user-attachments/assets/ba4f5058-bd78-4d1b-bf5f-f5341b23d3b5)
+
+
+
