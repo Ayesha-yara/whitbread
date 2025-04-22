@@ -128,6 +128,7 @@
             }
         },
         "submit": "Submit Enquiry",
+        "submitting": "Submitting...",
         "success": "Thank you for your enquiry. We will be in touch shortly.",
         "error": "Something went wrong. Please try again."
     },

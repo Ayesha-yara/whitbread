@@ -13,27 +13,26 @@ import ContactDetailsSection from "./sections/ContactDetailsSection";
 import BookingDetailsSection from "./sections/BookingDetailsSection";
 import RoomRequirementsSection from "./sections/RoomRequirementsSection";
 
-
 function getReadableFieldLabel(fieldPath: string[]): string {
   const fieldLabels: Record<string, string> = {
-    'firstName': 'First name',
-    'lastName': 'Last name',
-    'email': 'Email address',
-    'phoneNumber': 'Phone number',
-    'title': 'Title',
-    
-    'preferredHotel': 'Preferred hotel',
-    'checkIn': 'Check-in date',
-    'checkOut': 'Check-out date',
-    'bookerType': 'Booker type',
-    'purposeOfStay': 'Purpose of stay',
-    'dates': 'Dates',
-    
-    'rooms': 'Room selection',
-    'isAccessibleRoom': 'Accessible room',
-    'isTravellingWithChild': 'Travelling with children'
+    firstName: "First name",
+    lastName: "Last name",
+    email: "Email address",
+    phoneNumber: "Phone number",
+    title: "Title",
+
+    preferredHotel: "Preferred hotel",
+    checkIn: "Check-in date",
+    checkOut: "Check-out date",
+    bookerType: "Booker type",
+    purposeOfStay: "Purpose of stay",
+    dates: "Dates",
+
+    rooms: "Room selection",
+    isAccessibleRoom: "Accessible room",
+    isTravellingWithChild: "Travelling with children",
   };
-  
+
   const lastPart = fieldPath[fieldPath.length - 1];
   return fieldLabels[lastPart] || lastPart;
 }
@@ -47,7 +46,7 @@ export default function GroupBookingForm() {
   const [submittedAt, setSubmittedAt] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState(0);
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
-  
+
   const successMessageRef = useRef<HTMLDivElement>(null);
 
   const methods = useForm<GroupBookingFormData>({
@@ -86,12 +85,12 @@ export default function GroupBookingForm() {
           familyOf42A2C: 0,
           accessibleSingle: 0,
           accessibleDouble: 0,
-          accessibleTwin: 0
+          accessibleTwin: 0,
         },
       },
-      additionalInformation: {  
-        comments: ""
-      }
+      additionalInformation: {
+        comments: "",
+      },
     },
   });
 
@@ -109,8 +108,8 @@ export default function GroupBookingForm() {
   }, [errors, setFocus]);
 
   const onSubmit = async (data: GroupBookingFormData) => {
-    console.log('onSubmit called with data:', data);
-    
+    console.log("onSubmit called with data:", data);
+
     setIsSubmitting(true);
     setSubmissionError(null);
     setSubmissionSuccess(false);
@@ -125,7 +124,7 @@ export default function GroupBookingForm() {
         },
         body: JSON.stringify(data),
       });
-      console.log('API response received:', response.status);
+      console.log("API response received:", response.status);
 
       const result = await response.json();
 
@@ -135,17 +134,22 @@ export default function GroupBookingForm() {
           setReferenceNumber(result.referenceNumber);
           setSubmittedAt(result.submittedAt);
           methods.reset();
-          
+
           setTimeout(() => {
             if (successMessageRef.current) {
-              const elementRect = successMessageRef.current.getBoundingClientRect();
-              const absoluteElementTop = elementRect.top + window.pageYOffset;
-              
-              const middle = absoluteElementTop - (window.innerHeight / 2) + (elementRect.height / 2);
-              
+              const elementRect =
+                successMessageRef.current.getBoundingClientRect();
+              const absoluteElementTop =
+                elementRect.top + window.pageYOffset;
+
+              const middle =
+                absoluteElementTop -
+                window.innerHeight / 2 +
+                elementRect.height / 2;
+
               window.scrollTo({
                 top: middle,
-                behavior: 'smooth'
+                behavior: "smooth",
               });
             }
           }, 100);
@@ -168,7 +172,9 @@ export default function GroupBookingForm() {
       }
     } catch (error) {
       console.error("Submission error:", error);
-      setSubmissionError(error instanceof Error ? error.message : "Failed to submit enquiry");
+      setSubmissionError(
+        error instanceof Error ? error.message : "Failed to submit enquiry"
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -177,7 +183,7 @@ export default function GroupBookingForm() {
   return (
     <FormProvider {...methods}>
       {submissionSuccess && (
-        <div 
+        <div
           ref={successMessageRef}
           className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded"
         >
@@ -185,7 +191,8 @@ export default function GroupBookingForm() {
           <p>Your enquiry has been submitted successfully.</p>
           {referenceNumber && (
             <p className="mt-2">
-              Your reference number is: <span className="font-bold">{referenceNumber}</span>
+              Your reference number is:{" "}
+              <span className="font-bold">{referenceNumber}</span>
             </p>
           )}
           {submittedAt && (
@@ -218,7 +225,7 @@ export default function GroupBookingForm() {
           </div>
         </div>
       )}
-      
+
       {validationErrors.length > 0 && (
         <div
           id="validation-errors"
@@ -238,7 +245,9 @@ export default function GroupBookingForm() {
               />
             </svg>
             <div>
-              <p className="font-medium mb-2">Please fix the following errors:</p>
+              <p className="font-medium mb-2">
+                Please fix the following errors:
+              </p>
               <ul className="list-disc pl-5 space-y-1">
                 {validationErrors.map((error, index) => (
                   <li key={index}>{error}</li>
@@ -248,22 +257,22 @@ export default function GroupBookingForm() {
           </div>
         </div>
       )}
-      
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          console.log('Form values:', methods.getValues());
+          console.log("Form values:", methods.getValues());
           handleSubmit(
             (data) => {
               setValidationErrors([]);
               onSubmit(data);
             },
             (errors) => {
-              console.error('Form validation failed:', errors);
+              console.error("Form validation failed:", errors);
               const errorMessages: string[] = [];
               Object.entries(errors).forEach(([field, error]) => {
                 if (error?.message) {
-                  const fieldPath = field.split('.');
+                  const fieldPath = field.split(".");
                   const fieldName = getReadableFieldLabel(fieldPath);
                   errorMessages.push(`${fieldName}: ${error.message}`);
                 }
@@ -272,7 +281,7 @@ export default function GroupBookingForm() {
               setTimeout(() => {
                 window.scrollTo({
                   top: 0,
-                  behavior: 'smooth'
+                  behavior: "smooth",
                 });
               }, 100);
             }
@@ -289,17 +298,158 @@ export default function GroupBookingForm() {
               children: (
                 <div>
                   <ContactDetailsSection />
-                  <div className="mt-6 flex justify-end">
-                    <button
-                      type="button"
-                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onClick={() => {
-                        setValidationErrors([]);
-                        setActiveSection(1);
-                      }}
-                    >
-                      Continue to Booking Details
-                    </button>
+                  <div className="mt-6 flex justify-between">
+                    {activeSection > 0 && (
+                      <button
+                        type="button"
+                        className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                        onClick={() => setActiveSection(activeSection - 1)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 mr-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                          />
+                        </svg>
+                        Back
+                      </button>
+                    )}
+                    {activeSection < 2 ? (
+                      <button
+                        type="button"
+                        className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        onClick={() => setActiveSection(activeSection + 1)}
+                      >
+                        Continue
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 ml-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"
+                          />
+                        </svg>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        id="submit-button"
+                        data-cy="submit-button"
+                        className={`flex justify-end px-4 py-2 text-sm font-medium text-white rounded ${
+                          isSubmitting
+                            ? "bg-blue-400 cursor-not-allowed"
+                            : "bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        }`}
+                        disabled={isSubmitting}
+                        aria-disabled={isSubmitting}
+                        onClick={() => {
+                          const allRequiredFields = [
+                            "contactDetails.firstName",
+                            "contactDetails.lastName",
+                            "contactDetails.email",
+                            "contactDetails.phoneNumber",
+                            "bookingDetails.preferredHotel",
+                            "bookingDetails.dates.checkIn",
+                            "bookingDetails.dates.checkOut",
+                          ];
+
+                          let hasErrors = false;
+                          const errorMessages: string[] = [];
+
+                          allRequiredFields.forEach((field) => {
+                            if (!methods.getValues(field as any)) {
+                              const fieldPath = field.split(".");
+                              const fieldName = getReadableFieldLabel(
+                                fieldPath
+                              );
+
+                              methods.setError(field as any, {
+                                type: "required",
+                                message: "This field is required",
+                              });
+                              errorMessages.push(
+                                `${fieldName}: This field is required`
+                              );
+                              hasErrors = true;
+                            }
+                          });
+
+                          const rooms =
+                            methods.getValues("roomRequirements.rooms");
+                          const totalRooms = Object.values(rooms || {}).reduce(
+                            (sum, count) =>
+                              sum + (typeof count === "number" ? count : 0),
+                            0
+                          );
+                          if (totalRooms <= 0) {
+                            methods.setError("roomRequirements.rooms", {
+                              type: "required",
+                              message: "At least one room must be selected",
+                            });
+                            errorMessages.push(
+                              "Room selection: At least one room must be selected"
+                            );
+                            hasErrors = true;
+                          }
+
+                          if (hasErrors) {
+                            setValidationErrors(errorMessages);
+
+                            setTimeout(() => {
+                              window.scrollTo({
+                                top: 0,
+                                behavior: "smooth",
+                              });
+                            }, 100);
+                          } else {
+                            setValidationErrors([]);
+                            handleSubmit(onSubmit)();
+                          }
+                        }}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <svg
+                              className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              ></path>
+                            </svg>
+                            {t("submitting")}
+                          </>
+                        ) : (
+                          t("submit")
+                        )}
+                      </button>
+                    )}
                   </div>
                 </div>
               ),
@@ -310,23 +460,157 @@ export default function GroupBookingForm() {
                 <div>
                   <BookingDetailsSection />
                   <div className="mt-6 flex justify-between">
-                    <button
-                      type="button"
-                      className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
-                      onClick={() => setActiveSection(0)}
-                    >
-                      Back to Contact Details
-                    </button>
-                    <button
-                      type="button"
-                      className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      onClick={() => {
-                        setValidationErrors([]);
-                        setActiveSection(2);
-                      }}
-                    >
-                      Continue to Room Requirements
-                    </button>
+                    {activeSection > 0 && (
+                      <button
+                        type="button"
+                        className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                        onClick={() => setActiveSection(activeSection - 1)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 mr-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                          />
+                        </svg>
+                        Back
+                      </button>
+                    )}
+                    {activeSection < 2 ? (
+                      <button
+                        type="button"
+                        className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        onClick={() => setActiveSection(activeSection + 1)}
+                      >
+                        Continue
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 ml-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"
+                          />
+                        </svg>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        id="submit-button"
+                        data-cy="submit-button"
+                        className={`flex items-center px-4 py-2 text-sm font-medium text-white rounded ${
+                          isSubmitting
+                            ? "bg-blue-400 cursor-not-allowed"
+                            : "bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        }`}
+                        disabled={isSubmitting}
+                        aria-disabled={isSubmitting}
+                        onClick={() => {
+                          const allRequiredFields = [
+                            "contactDetails.firstName",
+                            "contactDetails.lastName",
+                            "contactDetails.email",
+                            "contactDetails.phoneNumber",
+                            "bookingDetails.preferredHotel",
+                            "bookingDetails.dates.checkIn",
+                            "bookingDetails.dates.checkOut",
+                          ];
+
+                          let hasErrors = false;
+                          const errorMessages: string[] = [];
+
+                          allRequiredFields.forEach((field) => {
+                            if (!methods.getValues(field as any)) {
+                              const fieldPath = field.split(".");
+                              const fieldName = getReadableFieldLabel(
+                                fieldPath
+                              );
+
+                              methods.setError(field as any, {
+                                type: "required",
+                                message: "This field is required",
+                              });
+                              errorMessages.push(
+                                `${fieldName}: This field is required`
+                              );
+                              hasErrors = true;
+                            }
+                          });
+
+                          const rooms =
+                            methods.getValues("roomRequirements.rooms");
+                          const totalRooms = Object.values(rooms || {}).reduce(
+                            (sum, count) =>
+                              sum + (typeof count === "number" ? count : 0),
+                            0
+                          );
+                          if (totalRooms <= 0) {
+                            methods.setError("roomRequirements.rooms", {
+                              type: "required",
+                              message: "At least one room must be selected",
+                            });
+                            errorMessages.push(
+                              "Room selection: At least one room must be selected"
+                            );
+                            hasErrors = true;
+                          }
+
+                          if (hasErrors) {
+                            setValidationErrors(errorMessages);
+
+                            setTimeout(() => {
+                              window.scrollTo({
+                                top: 0,
+                                behavior: "smooth",
+                              });
+                            }, 100);
+                          } else {
+                            setValidationErrors([]);
+                            handleSubmit(onSubmit)();
+                          }
+                        }}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <svg
+                              className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              ></path>
+                            </svg>
+                            {t("submitting")}
+                          </>
+                        ) : (
+                          t("submit")
+                        )}
+                      </button>
+                    )}
                   </div>
                 </div>
               ),
@@ -336,14 +620,158 @@ export default function GroupBookingForm() {
               children: (
                 <div>
                   <RoomRequirementsSection />
-                  <div className="mt-6 flex justify-start">
-                    <button
-                      type="button"
-                      className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400"
-                      onClick={() => setActiveSection(1)}
-                    >
-                      Back to Booking Details
-                    </button>
+                  <div className="mt-6 flex justify-between">
+                    {activeSection > 0 && (
+                      <button
+                        type="button"
+                        className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                        onClick={() => setActiveSection(activeSection - 1)}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 mr-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                          />
+                        </svg>
+                        Back
+                      </button>
+                    )}
+                    {activeSection < 2 ? (
+                      <button
+                        type="button"
+                        className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        onClick={() => setActiveSection(activeSection + 1)}
+                      >
+                        Continue
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-4 h-4 ml-2"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"
+                          />
+                        </svg>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        id="submit-button"
+                        data-cy="submit-button"
+                        className={`flex items-center px-4 py-2 text-sm font-medium text-white rounded ${
+                          isSubmitting
+                            ? "bg-blue-400 cursor-not-allowed"
+                            : "bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        }`}
+                        disabled={isSubmitting}
+                        aria-disabled={isSubmitting}
+                        onClick={() => {
+                          const allRequiredFields = [
+                            "contactDetails.firstName",
+                            "contactDetails.lastName",
+                            "contactDetails.email",
+                            "contactDetails.phoneNumber",
+                            "bookingDetails.preferredHotel",
+                            "bookingDetails.dates.checkIn",
+                            "bookingDetails.dates.checkOut",
+                          ];
+
+                          let hasErrors = false;
+                          const errorMessages: string[] = [];
+
+                          allRequiredFields.forEach((field) => {
+                            if (!methods.getValues(field as any)) {
+                              const fieldPath = field.split(".");
+                              const fieldName = getReadableFieldLabel(
+                                fieldPath
+                              );
+
+                              methods.setError(field as any, {
+                                type: "required",
+                                message: "This field is required",
+                              });
+                              errorMessages.push(
+                                `${fieldName}: This field is required`
+                              );
+                              hasErrors = true;
+                            }
+                          });
+
+                          const rooms =
+                            methods.getValues("roomRequirements.rooms");
+                          const totalRooms = Object.values(rooms || {}).reduce(
+                            (sum, count) =>
+                              sum + (typeof count === "number" ? count : 0),
+                            0
+                          );
+                          if (totalRooms <= 0) {
+                            methods.setError("roomRequirements.rooms", {
+                              type: "required",
+                              message: "At least one room must be selected",
+                            });
+                            errorMessages.push(
+                              "Room selection: At least one room must be selected"
+                            );
+                            hasErrors = true;
+                          }
+
+                          if (hasErrors) {
+                            setValidationErrors(errorMessages);
+
+                            setTimeout(() => {
+                              window.scrollTo({
+                                top: 0,
+                                behavior: "smooth",
+                              });
+                            }, 100);
+                          } else {
+                            setValidationErrors([]);
+                            handleSubmit(onSubmit)();
+                          }
+                        }}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <svg
+                              className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              ></path>
+                            </svg>
+                            {t("submitting")}
+                          </>
+                        ) : (
+                          t("submit")
+                        )}
+                      </button>
+                    )}
                   </div>
                 </div>
               ),
@@ -352,84 +780,6 @@ export default function GroupBookingForm() {
           openIndex={activeSection}
           onOpenIndexChange={setActiveSection}
         />
-
-
-
-        <div className="mt-6 text-right">
-          <button
-            type="button"
-            id="submit-button"
-            data-cy="submit-button"
-            className={`px-6 py-3 text-white font-semibold rounded-lg flex items-center justify-center min-w-[150px] ${isSubmitting ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
-            disabled={isSubmitting}
-            aria-disabled={isSubmitting}
-            onClick={() => {
-              const allRequiredFields = [
-                "contactDetails.firstName", 
-                "contactDetails.lastName", 
-                "contactDetails.email", 
-                "contactDetails.phoneNumber",
-
-                "bookingDetails.preferredHotel", 
-                "bookingDetails.dates.checkIn", 
-                "bookingDetails.dates.checkOut"
-              ];
-              
-              let hasErrors = false;
-              const errorMessages: string[] = [];
-              
-              allRequiredFields.forEach(field => {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                if (!methods.getValues(field as any)) {
-                  const fieldPath = field.split('.');
-                  const fieldName = getReadableFieldLabel(fieldPath);
-  
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  methods.setError(field as any, { type: "required", message: "This field is required" });
-                  errorMessages.push(`${fieldName}: This field is required`);
-                  hasErrors = true;
-                }
-              });
-              
-              const rooms = methods.getValues("roomRequirements.rooms");
-              const totalRooms = Object.values(rooms || {}).reduce((sum, count) => sum + (typeof count === 'number' ? count : 0), 0);
-              if (totalRooms <= 0) {
-                methods.setError("roomRequirements.rooms", { 
-                  type: "required", 
-                  message: "At least one room must be selected" 
-                });
-                errorMessages.push("Room selection: At least one room must be selected");
-                hasErrors = true;
-              }
-              
-              if (hasErrors) {
-                setValidationErrors(errorMessages);
-
-                setTimeout(() => {
-                  window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                  });
-                }, 100);
-              } else {
-                setValidationErrors([]);
-                handleSubmit(onSubmit)();
-              }
-            }}
-          >
-            {isSubmitting ? (
-              <>
-                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                {t("submitting")}
-              </>
-            ) : (
-              t("submit")
-            )}
-          </button>
-        </div>
       </form>
     </FormProvider>
   );
