@@ -8,14 +8,10 @@ export interface StoredBooking {
   data: GroupBookingFormData;
 }
 
-/**
- * In-memory storage for submitted form data
- */
+
 let bookingSubmissions: StoredBooking[] = [];
 
-/**
- * Get all booking submissions
- */
+
 export const getAllBookings = (): StoredBooking[] => {
   return [...bookingSubmissions];
 };
@@ -59,23 +55,15 @@ export const getBookingByIndex = (index: number): StoredBooking | null => {
   return null;
 };
 
-/**
- * Clear all bookings (for testing purposes)
- */
 export const clearAllBookings = (): void => {
   bookingSubmissions = [];
 };
 
-/**
- * Get the total number of bookings
- */
 export const getBookingCount = (): number => {
   return bookingSubmissions.length;
 };
 
-/**
- * Sample locations for the booking form
- */
+
 export const locations = [
   { id: 'london-central', name: 'London Central' },
   { id: 'london-kings-cross', name: 'London Kings Cross' },

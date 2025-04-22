@@ -15,7 +15,7 @@ interface AccordionProps {
 export default function Accordion({ items, defaultOpenIndex = 0, onOpenIndexChange, openIndex: controlledOpenIndex }: AccordionProps) {
   const [internalOpenIndex, setInternalOpenIndex] = useState(defaultOpenIndex);
   
-  // Use either controlled or uncontrolled open index
+
   const currentOpenIndex = controlledOpenIndex !== undefined ? controlledOpenIndex : internalOpenIndex;
 
   const toggleIndex = (index: number) => {

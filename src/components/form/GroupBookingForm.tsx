@@ -13,7 +13,7 @@ import ContactDetailsSection from "./sections/ContactDetailsSection";
 import BookingDetailsSection from "./sections/BookingDetailsSection";
 import RoomRequirementsSection from "./sections/RoomRequirementsSection";
 
-// Helper function to get human-readable field labels
+
 function getReadableFieldLabel(fieldPath: string[]): string {
   const fieldLabels: Record<string, string> = {
     'firstName': 'First name',
@@ -56,20 +56,20 @@ export default function GroupBookingForm() {
     defaultValues: {
       contactDetails: {
         title: "Mr",
-        firstName: "Test",
-        lastName: "User",
-        email: "test@example.com",
-        phoneNumber: "07700900000",
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
       },
       bookingDetails: {
         bookerType: "personal",
         purposeOfStay: "leisure",
         isSchoolOrYouth: false,
         reasonForVisit: "charity-event",
-        preferredHotel: "Test Hotel",
+        preferredHotel: "",
         dates: {
-          checkIn: "2025-05-01",
-          checkOut: "2025-05-03",
+          checkIn: "",
+          checkOut: "",
         },
         packageType: "breakfast",
       },
@@ -77,8 +77,8 @@ export default function GroupBookingForm() {
         isTravellingWithChild: false,
         isAccessibleRoom: false,
         rooms: {
-          singleOccupancy: 2,
-          doubleOccupancy: 1,
+          singleOccupancy: 0,
+          doubleOccupancy: 0,
           twinRooms: 0,
           familyOf21A1C: 0,
           familyOf32A1C: 0,
@@ -89,7 +89,7 @@ export default function GroupBookingForm() {
           accessibleTwin: 0
         },
       },
-      additionalInformation: {  // Added missing section
+      additionalInformation: {  
         comments: ""
       }
     },
@@ -159,6 +159,7 @@ export default function GroupBookingForm() {
         if (result.errors) {
           Object.entries(result.errors).forEach(([field, messages]) => {
             if (Array.isArray(messages) && messages.length > 0) {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               methods.setError(field as any, {
                 type: "server",
                 message: messages[0],
@@ -302,11 +303,13 @@ export default function GroupBookingForm() {
                         const errorMessages: string[] = [];
                         
                         contactFields.forEach(field => {
-                          // We need to use 'any' here because the field paths are dynamically generated
+            
+          
                           // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           if (!methods.getValues(field as any)) {
                             const fieldPath = field.split('.');
                             const fieldName = getReadableFieldLabel(fieldPath);
+            
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             methods.setError(field as any, { type: "required", message: "This field is required" });
                             errorMessages.push(`${fieldName}: This field is required`);
@@ -351,17 +354,19 @@ export default function GroupBookingForm() {
                       type="button"
                       className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       onClick={() => {
-                        // Validate booking details section
+
                         const bookingFields = ["bookingDetails.preferredHotel", "bookingDetails.dates.checkIn", "bookingDetails.dates.checkOut"];
                         let hasErrors = false;
                         const errorMessages: string[] = [];
                         
                         bookingFields.forEach(field => {
-                          // We need to use 'any' here because the field paths are dynamically generated
+            
+          
                           // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           if (!methods.getValues(field as any)) {
                             const fieldPath = field.split('.');
                             const fieldName = getReadableFieldLabel(fieldPath);
+            
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
                             methods.setError(field as any, { type: "required", message: "This field is required" });
                             errorMessages.push(`${fieldName}: This field is required`);
@@ -371,7 +376,7 @@ export default function GroupBookingForm() {
                         
                         if (hasErrors) {
                           setValidationErrors(errorMessages);
-                          // Scroll to the validation error box
+          
                           setTimeout(() => {
                             window.scrollTo({
                               top: 0,
@@ -422,12 +427,12 @@ export default function GroupBookingForm() {
             aria-disabled={isSubmitting}
             onClick={() => {
               const allRequiredFields = [
-                // Contact details
+
                 "contactDetails.firstName", 
                 "contactDetails.lastName", 
                 "contactDetails.email", 
                 "contactDetails.phoneNumber",
-                // Booking details
+
                 "bookingDetails.preferredHotel", 
                 "bookingDetails.dates.checkIn", 
                 "bookingDetails.dates.checkOut"
@@ -438,21 +443,20 @@ export default function GroupBookingForm() {
               const errorMessages: string[] = [];
               
               allRequiredFields.forEach(field => {
+
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 if (!methods.getValues(field as any)) {
                   const fieldPath = field.split('.');
                   const fieldName = getReadableFieldLabel(fieldPath);
+  
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   methods.setError(field as any, { type: "required", message: "This field is required" });
                   errorMessages.push(`${fieldName}: This field is required`);
                   hasErrors = true;
                 }
               });
-              
-              // Check if at least one room is selected
               const rooms = methods.getValues("roomRequirements.rooms");
               const totalRooms = Object.values(rooms || {}).reduce((sum, count) => sum + (typeof count === 'number' ? count : 0), 0);
-              
               if (totalRooms <= 0) {
                 methods.setError("roomRequirements.rooms", { 
                   type: "required", 
@@ -464,7 +468,7 @@ export default function GroupBookingForm() {
               
               if (hasErrors) {
                 setValidationErrors(errorMessages);
-                // Scroll to the validation error box
+
                 setTimeout(() => {
                   window.scrollTo({
                     top: 0,

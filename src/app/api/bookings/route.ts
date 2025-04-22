@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { addBooking, getAllBookings } from '@/lib/mockData';
 import { GroupBookingFormData } from '@/types/form';
 
-/**
- * GET /api/bookings
- * Returns all booking submissions
- */
+
 export async function GET() {
   try {
     const bookings = getAllBookings();
@@ -19,15 +16,12 @@ export async function GET() {
   }
 }
 
-/**
- * POST /api/bookings
- * Creates a new booking submission
- */
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    // Validate the request body
+
     if (!isValidBookingData(body)) {
       return NextResponse.json(
         { 
@@ -39,10 +33,10 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    // Add the booking to our mock database
+
     const { id, data } = addBooking(body as GroupBookingFormData);
     
-    // Simulate a slight delay to mimic a real API call
+
     await new Promise(resolve => setTimeout(resolve, 800));
     
     return NextResponse.json(
@@ -63,9 +57,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-/**
- * Basic validation for booking data
- */
 function isValidBookingData(data: unknown): boolean {
   if (!data || typeof data !== 'object' || data === null) return false;
   
