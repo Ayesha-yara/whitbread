@@ -15,7 +15,7 @@ npm run dev
 ```
 
 Open [[http://localhost:3000](http://localhost:3000)]
-([https://whitbread-o2kh.vercel.app/de/why/groups/form](https://whitbread-o2kh.vercel.app/en/why/groups/form)
+([https://whitbread-o2kh.vercel.app/en/why/groups/form](https://whitbread-o2kh.vercel.app/en/why/groups/form)
 )) with your browser to see the result.
 https://whitbread-o2kh.vercel.app/de/why/groups/form
 
