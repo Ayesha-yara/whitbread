@@ -16,7 +16,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-**Project Structure**
+## **Project Structure**
 **Key Directories and Files**
 src/components/form: Contains the main form components:
 
@@ -42,8 +42,8 @@ contactDetailsSection.cy.ts: Tests the contact details section.
 bookingDetailsSection.cy.ts: Tests the booking details section.
 roomRequirementsSection.cy.ts: Tests the room requirements section.
 
-**Features
-Multi-Step Form:**
+## **Features**
+Multi-Step Form:
 
 Collects contact details, booking details, and room requirements.
 Validates input using Zod.
@@ -79,7 +79,7 @@ if (process.env.NODE_ENV === 'development') {
   worker.start();
 }
 
-**Deployment**
+## **Deployment**
 To deploy the application, use the Vercel Platform:
 
 
